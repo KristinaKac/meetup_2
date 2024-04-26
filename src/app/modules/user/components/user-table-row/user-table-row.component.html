@@ -1,0 +1,31 @@
+<div *ngIf="!isEdit" class="row">
+    <div class="cell">{{user.fio ? user.fio : 'Пользователь'}}</div>
+    <div class="cell">{{user.email}}</div>
+    <div class="cell">***********</div>
+    <div class="cell">
+        <div *ngFor="let role of user.roles">{{role.name}}</div>
+    </div>
+    <div class="cell">
+
+        <button 
+        [icon]="'gear-8-edge'" 
+        prizmIconButton 
+        appearanceType="fill"
+        appearance="primary" 
+        size="xl"
+        type="submit"
+        (click)="isEdit = !isEdit"
+        ></button>
+        <button 
+        [icon]="'circle-xmark'" 
+        prizmIconButton 
+        appearanceType="fill"
+        appearance="primary" 
+        size="xl"
+        type="submit"
+        (click)="delete()"
+        ></button>
+    </div>
+</div>
+<app-user-form [isCreate]="false" *ngIf="isEdit" (updateEvent)="update($event)" (closeFormEvent)="closeForm()" [roleList]="roleList"
+    [user]="user"></app-user-form>

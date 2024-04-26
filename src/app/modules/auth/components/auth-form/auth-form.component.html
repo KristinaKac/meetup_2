@@ -1,0 +1,53 @@
+<form class="form" [formGroup]="authForm" (ngSubmit)="onSubmit()">
+    <h2>{{formType === 'registration' ? 'Регистрация' : 'Вход'}}</h2>
+    <div *ngIf="formType === 'registration'" class="form_control">
+
+        <prizm-input-layout label="Имя">
+            <input formControlName="fio" type="text" prizmInput />
+        </prizm-input-layout>
+
+        <div class="error" *ngIf="authForm.controls['fio'].invalid && authForm.controls['fio'].touched">
+            <div *ngIf="authForm.controls['fio'].hasError('required')">Необходимо заполнить поле 'имя'</div>
+            <div *ngIf="authForm.controls['fio'].hasError('minlength')">Минимальная длина 2 символа</div>
+        </div>
+    </div>
+    <div class="form_control">
+
+        <prizm-input-layout label="Почта">
+            <input formControlName="email" type="email" [required]="true" prizmInput />
+        </prizm-input-layout>
+
+        <div class="error" *ngIf="authForm.controls['email'].invalid && authForm.controls['email'].touched">
+            <div *ngIf="authForm.controls['email'].hasError('required')">Необходимо заполнить поле 'почта'</div>
+            <div *ngIf="authForm.controls['email'].hasError('email')">Пожалуйста, укажите корректный адрес</div>
+        </div>
+    </div>
+    <div class="form_control">
+
+        <prizm-input-layout label="Пароль">
+            <input formControlName="password" #inputPassword="prizmInputPassword" prizmInputPassword />
+            <prizm-input-password-auxiliary-control [inputPassword]="inputPassword"
+                prizm-input-right></prizm-input-password-auxiliary-control>
+        </prizm-input-layout>
+
+        <div class="error" *ngIf="authForm.controls['password'].invalid && authForm.controls['password'].touched">
+            <div *ngIf="authForm.controls['password'].hasError('required')">Необходимо заполнить поле 'пароль'</div>
+            <div *ngIf="authForm.controls['password'].hasError('minlength')">Минимальная длина пароля 4 символа</div>
+        </div>
+    </div>
+
+    <div class="form_control">
+        <button prizmButton appearanceType="ghost" appearance="primary" size="xl" type="button"
+            (click)="formType = 'login'" *ngIf="formType === 'registration'">Есть аккаунт?
+            Войдите</button>
+        <button prizmButton appearanceType="ghost" appearance="primary" size="xl" type="button"
+            (click)="formType = 'registration'" *ngIf="formType === 'login'">Нет аккаунта?
+            Создайте</button>
+    </div>
+
+    <div class="form_control">
+        <button prizmButton appearance="primary" size="xl" [disabled]="authForm.invalid" type="submit">
+            {{formType === 'registration' ? 'Зарегистрироваться' : 'Войти'}}
+        </button>
+    </div>
+</form>

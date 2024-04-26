@@ -1,0 +1,44 @@
+<section class="header">
+    <div class="header_fixed header">
+        <div class="header_fixed_container">
+
+            <nav class="nav">
+                <ul class="nav_list">
+                    <li class="nav_item">
+                        <a routerLink="" routerLinkActive="active-link" class="router-link"
+                            [routerLinkActiveOptions]="{exact: true}">
+                            О проекте</a>
+                    </li>
+                    <li *ngIf="authService.user" class="nav_item">
+                        <a routerLink="meetups" routerLinkActive="active-link" class="router-link"
+                            [routerLinkActiveOptions]="{exact: true}">
+                            Все митапы</a>
+                    </li>
+                    <li *ngIf="authService.user" class="nav_item">
+                        <a routerLink="userMeetups" routerLinkActive="active-link" class="router-link"
+                            [routerLinkActiveOptions]="{exact: true}">Мои митапы</a>
+                    </li>
+                    <li *ngIf="authService.user && authService.isAdmin" class="nav_item">
+                        <a routerLink="users" routerLinkActive="active-link" class="router-link"
+                            [routerLinkActiveOptions]="{exact: true}">Пользователи</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div *ngIf="authService.user; else isNotAuth">
+                <button (click)="logout()" prizmButton appearance="secondary" size="xl">
+                    Выйти
+                </button>
+            </div>
+
+            <ng-template #isNotAuth>
+                <div class="btns">
+                    <a prizmButton appearance="secondary" size="xl" routerLink="login">
+                        Войти
+                    </a>
+                </div>
+            </ng-template>
+
+        </div>
+    </div>
+</section>

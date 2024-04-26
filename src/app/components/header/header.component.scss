@@ -1,0 +1,49 @@
+.header {
+    width: 100%;
+    height: 50px;
+    position: relative;
+    z-index: 98;
+}
+
+.header_fixed {
+    background-color: #FF8A65;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    z-index: 99;
+}
+
+.header_fixed_container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    column-gap: 20px;
+    width: 1280px;
+    padding: 0px 20px;
+    z-index: 100;
+}
+
+.nav_list {
+    display: flex;
+    align-items: center;
+    column-gap: 30px;
+    list-style-type: none;
+}
+
+.router-link {
+    color: white;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.active-link {
+    text-decoration: underline;
+}
+
+.btns {
+    display: flex;
+    align-items: center;
+    column-gap: 20px;
+}

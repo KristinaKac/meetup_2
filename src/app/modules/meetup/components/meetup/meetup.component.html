@@ -1,0 +1,57 @@
+<prizm-accordion>
+    <prizm-accordion-item [title]="meetup.name">
+        <ng-template prizmAccordionContent>
+            <div class="card" [ngClass]="{greyBack: isOldMeetup, openMeetup: isOpen}">
+
+                <div class="meetup_header">
+                    <div>
+                        <span class="meetup_subscribers">Подписчики: {{meetup.users.length}}</span>
+                    </div>
+                    <div class="meetup_time header">{{getDate(meetup.time)}}</div>
+                    <div class="meetup_description">Описание: {{meetup.description || 'Нет информации'}}</div>
+                    <div *ngIf="isOldMeetup" class="meetup_location header">Проведено</div>
+                    <div *ngIf="!isOldMeetup" class="meetup_location header">Местоположение: {{meetup.location}}</div>
+                </div>
+                <div>
+                    <h3>Продолжитльность митапа:</h3>
+                    <span>{{meetup.duration || 'Не указано'}}</span>
+                </div>
+                <div>
+                    <h3>Целевая аудитория:</h3>
+                    <span>{{meetup.target_audience || 'Не указано'}}</span>
+                </div>
+                <div>
+                    <h3>Причина почему митап нужно посетить:</h3>
+                    <span>{{meetup.reason_to_come || 'Не указано'}}</span>
+                </div>
+                <div>
+                    <h3>Что будет на митапе:</h3>
+                    <span>{{meetup.will_happen || 'Не указано'}}</span>
+                </div>
+
+                <div class="meetup_footer">
+                    <div class="footer">
+                        <mat-icon>person</mat-icon>
+                        <span>{{meetup.owner && meetup.owner.fio ? meetup.owner.fio : 'Неизвестный автор'}}</span>
+                    </div>
+                    <div class="footer">
+                        <div *ngIf="!isOldMeetup && !isUserPage">
+                            <button *ngIf="!isSubscribe" (click)="subscribe()" prizmButton appearance="primary"
+                                size="xl">Я
+                                пойду</button>
+                            <button *ngIf="isSubscribe" (click)="unsubscribe()" prizmButton appearance="primary"
+                                size="xl">Не смогу
+                                пойти</button>
+                        </div>
+                        <div class="footer" *ngIf="isUserPage">
+                            <button *ngIf="isCanEdit" (click)="show()" prizmButton appearance="primary"
+                                size="xl">Редактировать</button>
+                            <button *ngIf="isCanEdit" (click)="delete()" prizmButton appearance="primary"
+                                size="xl">Удалить</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </prizm-accordion-item>
+</prizm-accordion>

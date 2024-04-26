@@ -1,0 +1,49 @@
+<form class="form" [formGroup]="meetupForm" (ngSubmit)="onSubmit()">
+
+    <prizm-input-layout label="Название">
+        <input formControlName="name" type="text" [required]="true" prizmInput />
+    </prizm-input-layout>
+
+    <div class="error" *ngIf="meetupForm.controls['name'].invalid && meetupForm.controls['name'].touched">
+        <div *ngIf="meetupForm.controls['name'].hasError('required')">Необходимо заполнить поле</div>
+        <div *ngIf="meetupForm.controls['name'].hasError('minlength')">Минимум 3 символа</div>
+    </div>
+
+    <prizm-input-layout label="Описание">
+        <input formControlName="description" type="text" [required]="true" prizmInput />
+    </prizm-input-layout>
+
+    <prizm-input-layout label="Введите дату и время">
+        <prizm-input-layout-date-time formControlName="time" [formControl]="value"
+            prizmDropdownHostControl></prizm-input-layout-date-time>
+    </prizm-input-layout>
+
+    <prizm-input-layout label="Продолжительность митапа (в мин.)" size="l" status="default">
+        <input formControlName="duration" #inputNumber="prizmInputNumber" [step]="2" type="number" prizmInput
+            placeholder="Введите число" [required]="true" />
+        <ng-template [control]="inputNumber" prizmInputStatusText></ng-template>
+        <prizm-input-number-auxiliary-controls [inputNumber]="inputNumber"
+            prizm-input-right></prizm-input-number-auxiliary-controls>
+    </prizm-input-layout>
+
+    <prizm-input-layout label="Местоположение">
+        <input formControlName="location" type="text" [required]="true" prizmInput />
+    </prizm-input-layout>
+
+    <prizm-input-layout label="Целевая аудитория">
+        <input formControlName="target_audience" type="text" [required]="true" prizmInput />
+    </prizm-input-layout>
+
+    <prizm-input-layout label="Перечень знаний необходимых для посещения митапа?">
+        <input formControlName="need_to_know" type="text" [required]="true" prizmInput />
+    </prizm-input-layout>
+
+    <prizm-input-layout label="Что будет на митапе?">
+        <input formControlName="will_happen" type="text" [required]="true" prizmInput />
+    </prizm-input-layout>
+
+    <prizm-input-layout label="Причина почему митап нужно обязательно посетить?">
+        <input formControlName="reason_to_come" type="text" [required]="true" prizmInput />
+    </prizm-input-layout>
+    <button prizmButton appearance="primary" size="xl" [disabled]="meetupForm.invalid" type="submit">Ок</button>
+</form>

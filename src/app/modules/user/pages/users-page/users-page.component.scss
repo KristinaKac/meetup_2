@@ -1,0 +1,22 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+}
+.table {
+    background-color: white;
+    border-radius: 14px;
+}
+.row {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 20px;
+    column-gap: 10px;
+    border-bottom: 1px solid #ececec;
+}
+.row:last-child {
+    border-bottom: none;
+}
+.btn {
+    width: 100%;
+}

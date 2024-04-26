@@ -1,0 +1,25 @@
+<section class="page">
+    <div>
+        <button class="btn" (click)="isEdit = !isEdit" prizmButton appearance="primary" size="xl">{{isEdit ? 'Закрыть' :
+            'Добавить
+            пользователя'}}</button>
+    </div>
+
+    <app-user-form (createUserEvent)="createUser($event)" (closeFormEvent)="closeUserForm()" [isCreate]="true"
+        *ngIf="isEdit"></app-user-form>
+
+    <pagination-controls (pageChange)="currentPage = $event" previousLabel="Предыдущая"
+        nextLabel="Следующая"></pagination-controls>
+
+    <div *ngIf="spinnerService.loading$ | async"
+        style="position: relative; width: 150px; color: var(--prizm-text-icon-primary)">
+        <prizm-spinner size="l"> </prizm-spinner>
+    </div>
+
+    <div class="table">
+        <div class="row" *ngFor="let user of userList$  | async | paginate: {itemsPerPage: 15, currentPage}"
+            [user]="user" [roleList]="roleList" app-user-table-row [isCreate]="false" (updateEvent)="update($event)"
+            (deleteEvent)="deleteUser($event)">
+        </div>
+    </div>
+</section>

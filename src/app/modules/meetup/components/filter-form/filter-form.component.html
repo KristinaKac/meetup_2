@@ -1,0 +1,18 @@
+<form class="filter_form" [formGroup]="filterForm">
+
+    <prizm-input-layout label="Поиск"
+        *ngIf="filterForm.value.criterion !== 'time' && filterForm.value.criterion !== 'По дате'">
+        <input formControlName="search" prizmInput />
+    </prizm-input-layout>
+
+    <prizm-input-layout label="Выберите дату"
+        *ngIf="filterForm.value.criterion === 'time' || filterForm.value.criterion === 'По дате'">
+        <prizm-input-layout-date formControlName="search"></prizm-input-layout-date>
+    </prizm-input-layout>
+
+    <prizm-input-layout label="Критерий">
+        <prizm-input-select #input formControlName="criterion" [items]="items"
+            [prizmHintCanShow]="true"></prizm-input-select>
+        <ng-template [control]="input" prizmInputStatusText></ng-template>
+    </prizm-input-layout>
+</form>

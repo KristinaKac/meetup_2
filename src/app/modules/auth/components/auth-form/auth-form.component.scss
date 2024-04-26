@@ -1,0 +1,12 @@
+form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+}
+mat-form-field, button {
+    width: 100%;
+}
+h2 {
+    margin-top: 0px;
+    text-align: center;
+}

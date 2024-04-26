@@ -1,0 +1,72 @@
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()" [ngClass]="isCreate ? 'createForm' : 'form'">
+    <div class="form_control">
+
+        <prizm-input-layout label="Имя">
+            <input formControlName="fio" type="text" [required]="true" prizmInput />
+        </prizm-input-layout>
+
+        <div class="error" *ngIf="userForm.controls['fio'].invalid && userForm.controls['fio'].touched">
+            <div *ngIf="userForm.controls['fio'].hasError('required')">Необходимо заполнить поле 'имя'</div>
+            <div *ngIf="userForm.controls['fio'].hasError('minlength')">Минимальная длина 2 символа</div>
+        </div>
+    </div>
+    <div class="form_control">
+        <prizm-input-layout label="Почта">
+            <input formControlName="email" type="email" [required]="true" prizmInput />
+        </prizm-input-layout>
+
+        <div class="error" *ngIf="userForm.controls['email'].invalid && userForm.controls['email'].touched">
+            <div *ngIf="userForm.controls['email'].hasError('required')">Необходимо заполнить поле 'почта'</div>
+            <div *ngIf="userForm.controls['email'].hasError('email')">Пожалуйста, укажите корректный адрес</div>
+        </div>
+    </div>
+    <div class="form_control">
+
+        <prizm-input-layout *ngIf="!isCreate" label="Новый пароль">
+            <input formControlName="password" #inputPassword="prizmInputPassword" prizmInputPassword />
+            <prizm-input-password-auxiliary-control [inputPassword]="inputPassword"
+                prizm-input-right></prizm-input-password-auxiliary-control>
+        </prizm-input-layout>
+        <prizm-input-layout *ngIf="isCreate" label="Новый пароль">
+            <input formControlName="password" #inputPassword="prizmInputPassword" prizmInputPassword [required]="true" />
+            <prizm-input-password-auxiliary-control [inputPassword]="inputPassword"
+                prizm-input-right></prizm-input-password-auxiliary-control>
+        </prizm-input-layout>
+
+        <div class="error" *ngIf="userForm.controls['password'].invalid && userForm.controls['password'].touched">
+            <div *ngIf="userForm.controls['password'].hasError('required') && isCreate">Необходимо заполнить поле
+                'пароль'</div>
+            <div *ngIf="userForm.controls['password'].hasError('minlength')">Минимальная длина пароля 4 символа</div>
+        </div>
+    </div>
+    <div *ngIf="!isCreate" class="form_control">
+
+        <prizm-input-layout label="Добавить роль">
+            <prizm-input-select #input formControlName="role" [items]="items"
+                [prizmHintCanShow]="true"></prizm-input-select>
+            <ng-template [control]="input" prizmInputStatusText ></ng-template>
+        </prizm-input-layout>
+    </div>
+
+    <div>
+        <button 
+        [icon]="'circle-check-empty'" 
+        prizmIconButton 
+        appearanceType="fill"
+        appearance="primary" 
+        size="xl"
+        type="submit"
+        ></button>
+
+        <button 
+        [icon]="'circle-xmark'" 
+        prizmIconButton 
+        appearanceType="fill"
+        appearance="primary" 
+        size="xl"
+        type="submit"
+        *ngIf="!isCreate" 
+        (click)="closeForm()"
+        ></button>
+    </div>
+</form>

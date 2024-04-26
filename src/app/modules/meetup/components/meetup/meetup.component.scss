@@ -1,0 +1,40 @@
+.card {
+    background-color: white;
+    padding: 25px;
+    border-radius: 14px;
+    font-size: 14px;
+}
+.greyBack {
+    background-color: #f3f3f3;
+}
+.meetup_header {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    row-gap: 15px;
+}
+.meetup_body {
+    margin-top: 15px;
+    padding: 0px;
+    list-style-type: none;
+
+}
+.meetup_footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: 15px;
+    margin-top: 15px;
+}
+.header {
+    display: flex;
+    justify-content: end;
+}
+
+.footer {
+    display: flex;
+    align-items: center;
+    column-gap: 15px;
+}
+h3 {
+    margin: 5px 0px;
+}

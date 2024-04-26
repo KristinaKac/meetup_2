@@ -1,0 +1,15 @@
+.form {
+    display: grid;
+    grid-template-columns: repeat(4, 2fr) 1fr;
+    column-gap: 10px;
+}
+
+.createForm {
+    display: flex;
+    width: 100%;
+    column-gap: 15px;
+}
+
+.form_control, .input, .select {
+    width: 100%;
+}

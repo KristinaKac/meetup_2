@@ -1,0 +1,16 @@
+<app-filter-form (filterEvent)="filter($event)"></app-filter-form>
+
+<pagination-controls previousLabel="Предыдущая" nextLabel="Следующая"
+    (pageChange)="setCurrentPage($event)"></pagination-controls>
+
+<div *ngIf="spinnerService.loading$ | async" style="position: relative; width: 150px; color: var(--prizm-text-icon-primary)">
+    <prizm-spinner size="l"> </prizm-spinner>
+</div>
+
+<ul class="meetup_list" *ngIf="meetupList$ | async as meetupList">
+    <app-meetup (subscribeEvent)="subscribe($event)" (unsubscribeEvent)="unsubscribe($event)" *ngFor="let item of meetupList
+    | filterMeetups: searchFilter : criterionFilter 
+    | paginate: {itemsPerPage: 10, currentPage: currentPage$}
+    " [meetup]="item"
+    ></app-meetup>
+</ul>
