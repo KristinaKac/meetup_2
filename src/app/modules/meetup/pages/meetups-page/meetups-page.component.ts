@@ -42,6 +42,7 @@ export class MeetupsPageComponent implements OnInit, OnDestroy {
   filter(value: { search: string, criterion: 'name' | 'description' | 'location' | 'time' | 'owner' }) {
     this.searchFilter = value.search;
     this.criterionFilter = value.criterion;
+    this.setCurrentPage(1);
   }
   setCurrentPage(page: number) {
     this.store.dispatch(setCurrentPageMeetup({page}))

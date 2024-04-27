@@ -1,9 +1,11 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { Store } from '@ngrx/store';
 import { PrizmSelectStringify, PrizmSelectValueTransformver } from '@prizm-ui/components';
 import 'moment/locale/ru';
 import { Subject, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs';
+import { MeetupState } from '../../store/meetup';
 
 @Component({
   selector: 'app-filter-form',
@@ -55,7 +57,7 @@ export class FilterFormComponent implements OnInit {
         takeUntil(this.destroy))
       .subscribe((data) => {
         if (this.filterForm.invalid) { return }
-        this.filterEvent.emit({ search: data, criterion: this.filterForm.value.criterion })
+        this.filterEvent.emit({ search: data, criterion: this.filterForm.value.criterion});
       });
   }
   ngOnDestroy(): void {
