@@ -1,9 +1,7 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, inject } from '@angular/core';
-import { prizmIconsCircleXmark, prizmIconsGear8Edge } from '@prizm-ui/icons/base/source';
-import { PrizmIconsFullRegistry } from '@prizm-ui/icons/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { Observable } from 'rxjs';
 import { IRole } from '../../../../shared/models/role';
 import { IUser } from '../../../../shared/models/user';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: '[app-user-table-row]',
@@ -16,15 +14,10 @@ export class UserTableRowComponent {
   @Input() roleList!: Observable<IRole[]>;
   @Input() user!: IUser;
   @Input() isCreate!: boolean;
-  private readonly iconsFullRegistry = inject(PrizmIconsFullRegistry);
   isEdit = false;
 
   @Output() updateEvent = new EventEmitter();
   @Output() deleteEvent = new EventEmitter();
-
-  constructor(){
-    this.iconsFullRegistry.registerIcons([prizmIconsGear8Edge, prizmIconsCircleXmark]);
-  }
 
   update(value: IUser) {
     this.updateEvent.emit(value)

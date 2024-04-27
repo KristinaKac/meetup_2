@@ -14,14 +14,6 @@ import { Subject, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs';
 
 export class FilterFormComponent implements OnInit {
 
-  // readonly items = [
-  //   'По названию',
-  //   'По описанию',
-  //   'По местоположению',
-  //   'По дате',
-  //   'По автору'
-  // ];
-
   readonly items = [
     { key: 'name', title: 'По названию' },
     { key: 'description', title: 'По описанию' },

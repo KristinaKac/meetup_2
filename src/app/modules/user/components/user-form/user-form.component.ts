@@ -13,8 +13,8 @@ import { prizmIconsCircleCheckEmpty, prizmIconsCircleXmark } from '@prizm-ui/ico
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserFormComponent {
+
   userForm!: FormGroup;
-  private readonly iconsFullRegistry = inject(PrizmIconsFullRegistry);
   public items: String[] = [];
   @Input() isCreate = false;
   @Input() roleList!: Observable<IRole[]>;
@@ -25,15 +25,7 @@ export class UserFormComponent {
   @Output() closeFormEvent = new EventEmitter();
   private destroy: Subject<void> = new Subject();
 
-
-  constructor(
-    private fb: FormBuilder
-  ) {
-    this.iconsFullRegistry.registerIcons([prizmIconsCircleCheckEmpty, prizmIconsCircleXmark]);
-  }
-
   ngOnInit(): void {
-
     if (this.roleList) {
       this.roleList
         .pipe(

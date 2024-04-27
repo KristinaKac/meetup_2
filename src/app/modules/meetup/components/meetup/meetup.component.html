@@ -13,7 +13,7 @@
                     <div *ngIf="!isOldMeetup" class="meetup_location header">Местоположение: {{meetup.location}}</div>
                 </div>
                 <div>
-                    <h3>Продолжитльность митапа:</h3>
+                    <h3>Продолжительность митапа:</h3>
                     <span>{{meetup.duration || 'Не указано'}}</span>
                 </div>
                 <div>
@@ -31,7 +31,7 @@
 
                 <div class="meetup_footer">
                     <div class="footer">
-                        <mat-icon>person</mat-icon>
+                        <prizm-icons-svg [size]="30" [name]="'user-circle'"></prizm-icons-svg>
                         <span>{{meetup.owner && meetup.owner.fio ? meetup.owner.fio : 'Неизвестный автор'}}</span>
                     </div>
                     <div class="footer">

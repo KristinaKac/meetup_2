@@ -15,6 +15,8 @@ import { PrizmAccordionModule, PrizmButtonModule, PrizmInputDateMultiComponent,
   PrizmInputSelectModule, PrizmInputTextModule, PrizmSpinnerModule } from '@prizm-ui/components';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MeetupStoreModule } from './store/meetup.store.module';
+import { UtilIconsModule } from '../../shared/util/util-icons/util-icons.module';
+import { PrizmIconsSvgComponent } from '@prizm-ui/icons';
 
 
 
@@ -31,6 +33,7 @@ import { MeetupStoreModule } from './store/meetup.store.module';
   imports: [
     CommonModule,
     FormsModule,
+    UtilIconsModule,
     MeetupStoreModule,
     ReactiveFormsModule,
     PrizmButtonModule,
@@ -39,11 +42,11 @@ import { MeetupStoreModule } from './store/meetup.store.module';
     PrizmInputSelectModule,
     NgxPaginationModule,
     PrizmSpinnerModule,
-    MatIconModule,
     PrizmAccordionModule,
     PrizmInputNumberModule,
     PrizmInputDateMultiComponent,
-    PrizmInputLayoutDateTimeComponent
+    PrizmInputLayoutDateTimeComponent,
+    PrizmIconsSvgComponent
   ]
 })
 export class MeetupModule { }

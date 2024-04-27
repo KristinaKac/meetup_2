@@ -22,7 +22,14 @@ moment.tz.setDefault();
 })
 export class MeetupComponent implements OnInit {
 
-  private readonly iconsFullRegistry = inject(PrizmIconsFullRegistry);
+  isOpen: boolean = false;
+  isOldMeetup: boolean = false;
+  isCanEdit: boolean = false;
+  @Input() isUserPage: boolean = false;
+  @Input() meetup!: IMeetup
+  @Output() subscribeEvent = new EventEmitter();
+  @Output() unsubscribeEvent = new EventEmitter();
+  @Output() deleteEvent = new EventEmitter();
 
   public positionVariants: PrizmOverlayInsidePlacement[] = Object.values(PrizmOverlayInsidePlacement);
   public position: PrizmOverlayInsidePlacement = this.positionVariants[8];
@@ -34,10 +41,7 @@ export class MeetupComponent implements OnInit {
     private authService: AuthService,
     public dialog: MatDialog,
     @Inject(PrizmDialogService) private readonly dialogService: PrizmDialogService,
-  ) {
-    this.iconsFullRegistry.registerIcons([prizmIconsArrowUp, prizmIconsArrowDown, prizmIconsUserCircle]);
-
-  }
+  ) {}
 
   ngOnInit(): void {
     this.checkDateMeetup();
@@ -48,18 +52,6 @@ export class MeetupComponent implements OnInit {
       this.isCanEdit = false;
     }
   }
-
-  isOpen: boolean = false;
-  isOldMeetup: boolean = false;
-  isCanEdit: boolean = false;
-  @Input() isUserPage: boolean = false;
-
-
-  @Input() meetup!: IMeetup
-
-  @Output() subscribeEvent = new EventEmitter();
-  @Output() unsubscribeEvent = new EventEmitter();
-  @Output() deleteEvent = new EventEmitter();
 
   get isSubscribe() {
     return this.meetup.users.find(item => item.id === this.authService.user?.id);

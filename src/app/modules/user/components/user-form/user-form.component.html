@@ -21,14 +21,14 @@
         </div>
     </div>
     <div class="form_control">
-
         <prizm-input-layout *ngIf="!isCreate" label="Новый пароль">
             <input formControlName="password" #inputPassword="prizmInputPassword" prizmInputPassword />
             <prizm-input-password-auxiliary-control [inputPassword]="inputPassword"
                 prizm-input-right></prizm-input-password-auxiliary-control>
         </prizm-input-layout>
         <prizm-input-layout *ngIf="isCreate" label="Новый пароль">
-            <input formControlName="password" #inputPassword="prizmInputPassword" prizmInputPassword [required]="true" />
+            <input formControlName="password" #inputPassword="prizmInputPassword" prizmInputPassword
+                [required]="true" />
             <prizm-input-password-auxiliary-control [inputPassword]="inputPassword"
                 prizm-input-right></prizm-input-password-auxiliary-control>
         </prizm-input-layout>
@@ -44,29 +44,17 @@
         <prizm-input-layout label="Добавить роль">
             <prizm-input-select #input formControlName="role" [items]="items"
                 [prizmHintCanShow]="true"></prizm-input-select>
-            <ng-template [control]="input" prizmInputStatusText ></ng-template>
+            <ng-template [control]="input" prizmInputStatusText></ng-template>
         </prizm-input-layout>
     </div>
 
     <div class="cell">
-        <button 
-        [icon]="'circle-check-empty'" 
-        prizmIconButton 
-        appearanceType="fill"
-        appearance="primary" 
-        size="xl"
-        type="submit"
-        ></button>
+        <button prizmIconButton appearance="primary" size="xl" type="submit">
+            <prizm-icons-svg [size]="30" [name]="'circle-check-empty'"></prizm-icons-svg>
+        </button>
 
-        <button 
-        [icon]="'circle-xmark'" 
-        prizmIconButton 
-        appearanceType="fill"
-        appearance="primary" 
-        size="xl"
-        type="submit"
-        *ngIf="!isCreate" 
-        (click)="closeForm()"
-        ></button>
+        <button prizmIconButton appearance="primary" size="xl" type="submit" *ngIf="!isCreate" (click)="closeForm()">
+            <prizm-icons-svg [size]="30" [name]="'circle-xmark'"></prizm-icons-svg>
+        </button>
     </div>
 </form>

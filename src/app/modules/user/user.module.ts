@@ -16,6 +16,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { PrizmSpinnerModule } from '@prizm-ui/components';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { UserStoreModule } from './store/user.store.module';
+import { PrizmIconsSvgComponent } from '@prizm-ui/icons';
+import { UtilIconsModule } from '../../shared/util/util-icons/util-icons.module';
 
 
 @NgModule({
@@ -28,13 +30,15 @@ import { UserStoreModule } from './store/user.store.module';
     CommonModule,
     UserStoreModule,
     FormsModule,
+    UtilIconsModule,
     ReactiveFormsModule,
     PrizmButtonModule,
     PrizmInputTextModule,
     PrizmInputPasswordModule,
     PrizmSpinnerModule,
     NgxPaginationModule,
-    PrizmInputSelectModule
+    PrizmInputSelectModule,
+    PrizmIconsSvgComponent
   ]
 })
 export class UserModule { }
