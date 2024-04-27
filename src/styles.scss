@@ -1,12 +1,27 @@
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: #ececec;}
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    background-color: #ececec;
+}
 
 .error {
     font-size: 12px;
     color: red;
 }
+
 .cell {
     display: flex;
     align-items: center;
     column-gap: 15px;
+}
+
+.spinner {
+    position: relative;
+    width: 150px;
+    color:#FF8A65;
 }

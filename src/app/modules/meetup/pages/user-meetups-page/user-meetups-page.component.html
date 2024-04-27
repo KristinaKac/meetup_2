@@ -2,9 +2,8 @@
     <button prizmButton appearance="primary" size="xl" (click)="show()">Создать новый митап</button>
 </div>
 
-<div *ngIf="spinnerService.loading$ | async"
-    style="position: relative; width: 150px; color: var(--prizm-text-icon-primary)">
-    <prizm-spinner size="l"></prizm-spinner>
+<div *ngIf="spinnerService.loading$ | async" class="spinner">
+    <prizm-spinner [inheritColor]="true" size="l"></prizm-spinner>
 </div>
 
 <ul class="meetup_list" *ngIf="meetupList$ | async as meetupList">

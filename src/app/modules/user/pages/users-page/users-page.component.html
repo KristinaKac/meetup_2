@@ -11,9 +11,8 @@
     <pagination-controls (pageChange)="currentPage = $event" previousLabel="Предыдущая"
         nextLabel="Следующая"></pagination-controls>
 
-    <div *ngIf="spinnerService.loading$ | async"
-        style="position: relative; width: 150px; color: var(--prizm-text-icon-primary)">
-        <prizm-spinner size="l"> </prizm-spinner>
+    <div *ngIf="spinnerService.loading$ | async" class="spinner">
+        <prizm-spinner [inheritColor]="true" size="l"> </prizm-spinner>
     </div>
 
     <div class="table">
