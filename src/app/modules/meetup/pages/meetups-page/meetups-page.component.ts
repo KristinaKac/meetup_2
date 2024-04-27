@@ -5,7 +5,7 @@ import { IMeetup } from '../../../../shared/models/meetup';
 import { SpinnerService } from '../../../../shared/services/spinner.service';
 import { getAllMeetups, setCurrentPageMeetup, subscribeMeetup, unsubscribeMeetup } from '../../store/meetup.actions';
 import { getCurrentPage, getMeetups } from '../../store/meetup.selector';
-import { MeetupState } from '../../store/meetup.state';
+import { MeetupState } from '../../store/meetup';
 
 @Component({
   selector: 'app-meetups-page',

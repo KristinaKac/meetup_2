@@ -3,8 +3,12 @@ import {
     createMeetupApi, deleteMeetupApi, editMeetupApi,
     getAllMeetupsApi, setCurrentPageMeetup, subscribeMeetupApi
 } from "./meetup.actions";
-import { initialState } from "./meetup.state";
+import { MeetupState } from "./meetup";
 
+export const initialState: MeetupState = {
+    meetupList: [],
+    currentPage: 1
+}
 
 export const meetupReducer = createReducer(initialState,
     on(getAllMeetupsApi, (state, action) => {

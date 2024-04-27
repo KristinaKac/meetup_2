@@ -7,7 +7,7 @@ import 'moment/locale/ru';
 import { Subject } from 'rxjs';
 import { IMeetup } from '../../../../shared/models/meetup';
 import { createMeetup, editMeetup } from '../../store/meetup.actions';
-import { MeetupState } from '../../store/meetup.state';
+import { MeetupState } from '../../store/meetup';
 
 
 @Component({

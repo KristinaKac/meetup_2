@@ -6,7 +6,7 @@ import { IUser } from '../../../../shared/models/user';
 import { SpinnerService } from '../../../../shared/services/spinner.service';
 import { addRoleUser, createUser, deleteUser, getAllRoles, getAllUsers, updateUser } from '../../store/user.actions';
 import { getRolesSelector, getUsers } from '../../store/user.selector';
-import { UserState } from '../../store/user.state';
+import { UserState } from '../../store/user';
 
 @Component({
   selector: 'app-users-page',

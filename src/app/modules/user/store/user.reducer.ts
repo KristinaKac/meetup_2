@@ -1,6 +1,11 @@
 import { createReducer, on } from "@ngrx/store";
 import { addRoleUserApi, createUserApi, deleteUserApi, getAllRolesApi, getAllUsersApi, updateUserApi } from "./user.actions";
-import { initialState } from "./user.state";
+import { UserState } from "./user";
+
+export const initialState: UserState = {
+    users: [],
+    roles: []
+}
 
 export const userReducer = createReducer(initialState,
     on(getAllUsersApi, (state, action) => {

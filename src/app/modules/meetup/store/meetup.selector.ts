@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { MeetupState } from "./meetup.state";
+import { MeetupState } from "./meetup";
 import { meetupFeatureKey } from "./meetup.actions";
 
 const getMeetupState = createFeatureSelector<MeetupState>(meetupFeatureKey);

@@ -10,7 +10,7 @@ import { MeetupFormComponent } from '../../components/meetup-form/meetup-form.co
 import { MeetupService } from '../../services/meetup.service';
 import { deleteMeetup, getAllMeetups } from '../../store/meetup.actions';
 import { getMeetups } from '../../store/meetup.selector';
-import { MeetupState } from '../../store/meetup.state';
+import { MeetupState } from '../../store/meetup';
 
 @Component({
   selector: 'app-user-meetups-page',

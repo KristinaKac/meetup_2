@@ -4,8 +4,3 @@ export interface MeetupState {
     meetupList: IMeetup[] | null,
     currentPage: number,
 }
-
-export const initialState: MeetupState = {
-    meetupList: [],
-    currentPage: 1
-}
