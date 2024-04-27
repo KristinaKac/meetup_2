@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { IRole } from '../../../../shared/models/role';
 import { IUser } from '../../../../shared/models/user';
 import { PrizmIconsFullRegistry } from '@prizm-ui/icons/core';
@@ -16,6 +16,14 @@ export class UserFormComponent {
   userForm!: FormGroup;
   private readonly iconsFullRegistry = inject(PrizmIconsFullRegistry);
   public items: String[] = [];
+  @Input() isCreate = false;
+  @Input() roleList!: Observable<IRole[]>;
+  @Input() user!: IUser;
+
+  @Output() updateEvent = new EventEmitter();
+  @Output() createUserEvent = new EventEmitter();
+  @Output() closeFormEvent = new EventEmitter();
+  private destroy: Subject<void> = new Subject();
 
   constructor(
     private fb: FormBuilder
@@ -23,15 +31,16 @@ export class UserFormComponent {
     this.iconsFullRegistry.registerIcons([prizmIconsCircleCheckEmpty, prizmIconsCircleXmark]);
   }
 
-  @Input() isCreate = false;
-
-
   ngOnInit(): void {
 
     if (this.roleList) {
-      this.roleList.subscribe((roles) => {
-        this.items = roles.map(role => role.name)
-      })
+      this.roleList
+        .pipe(
+          takeUntil(this.destroy)
+        )
+        .subscribe((roles) => {
+          this.items = roles.map(role => role.name)
+        })
     }
 
     this.userForm = new FormGroup({
@@ -41,13 +50,6 @@ export class UserFormComponent {
       role: new FormControl<string>('USER')
     });
   }
-
-  @Input() roleList!: Observable<IRole[]>;
-  @Input() user!: IUser;
-
-  @Output() updateEvent = new EventEmitter();
-  @Output() createUserEvent = new EventEmitter();
-  @Output() closeFormEvent = new EventEmitter();
 
   check(roleName: string) {
     return this.user.roles?.some(role => role.name === roleName);
@@ -96,5 +98,9 @@ export class UserFormComponent {
       password: this.userForm.value.password
     });
     this.closeForm();
+  }
+  ngOnDestroy(): void {
+    this.destroy.next();
+    this.destroy.complete();
   }
 }

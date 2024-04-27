@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Inject, OnInit, Outpu
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import 'moment/locale/ru';
-import { debounceTime, distinctUntilChanged } from 'rxjs';
+import { Subject, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-filter-form',
@@ -25,10 +25,10 @@ export class FilterFormComponent implements OnInit {
 
   @Output() filterEvent = new EventEmitter();
   @Output() resetEvent = new EventEmitter();
+  private destroy: Subject<void> = new Subject();
 
-  constructor(
-    @Inject(MAT_DATE_LOCALE) private _locale: string,
-  ) {
+
+  constructor() {
     this.filterForm = new FormGroup({
       search: new FormControl<string>(''),
       criterion: new FormControl<'name' | 'description' | 'location' | 'time' | 'owner'>('name', [Validators.required])
@@ -38,7 +38,8 @@ export class FilterFormComponent implements OnInit {
     this.filterForm.controls['search'].valueChanges
       .pipe(
         debounceTime(500),
-        distinctUntilChanged())
+        distinctUntilChanged(),
+        takeUntil(this.destroy))
       .subscribe((data) => {
         if (this.filterForm.invalid) { return }
 
@@ -63,5 +64,9 @@ export class FilterFormComponent implements OnInit {
         }
         this.filterEvent.emit({ search: data, criterion: this.filterForm.value.criterion })
       });
+  }
+  ngOnDestroy(): void {
+    this.destroy.next();
+    this.destroy.complete();
   }
 }
