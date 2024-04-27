@@ -4,15 +4,14 @@ import { EMPTY } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { IMeetup } from '../../../shared/models/meetup';
 import { MeetupService } from '../services/meetup.service';
-import { CREATE_MEETUP, DELETE_MEETUP, EDIT_MEETUP, GET_ALL_MEETUPS, 
-    SUBSCRIBE_MEETUP, UNSUBSCRIBE_MEETUP, createMeetupApi, deleteMeetupApi, 
+import { MeetupActionTypes, createMeetupApi, deleteMeetupApi, 
     editMeetupApi, getAllMeetupsApi, subscribeMeetupApi } from './meetup.actions';
 
 @Injectable()
 export class MeetupEffects {
 
     getAllMeetups$ = createEffect(() => this.actions$.pipe(
-        ofType(GET_ALL_MEETUPS),
+        ofType(MeetupActionTypes.requestAllMeetups),
         mergeMap(() => this.meetupService.getAll()
             .pipe(
                 map(meetupList => { return getAllMeetupsApi({ meetupList }) }),
@@ -21,7 +20,7 @@ export class MeetupEffects {
     )
     );
     subscribeMeetup$ = createEffect(() => this.actions$.pipe(
-        ofType(SUBSCRIBE_MEETUP),
+        ofType(MeetupActionTypes.subscribeMeetup),
         mergeMap((value: { idMeetup: number, idUser: number }) => this.meetupService.subscribe(value.idMeetup, value.idUser)
             .pipe(
                 map(meetup => { return subscribeMeetupApi({ meetup }) }),
@@ -30,7 +29,7 @@ export class MeetupEffects {
     )
     );
     unsubscribeMeetup$ = createEffect(() => this.actions$.pipe(
-        ofType(UNSUBSCRIBE_MEETUP),
+        ofType(MeetupActionTypes.unsubscribeMeetup),
         mergeMap((value: { idMeetup: number, idUser: number }) => this.meetupService.unsubscribe(value.idMeetup, value.idUser)
             .pipe(
                 map(meetup => { return subscribeMeetupApi({ meetup }) }),
@@ -39,7 +38,7 @@ export class MeetupEffects {
     )
     );
     createMeetup$ = createEffect(() => this.actions$.pipe(
-        ofType(CREATE_MEETUP),
+        ofType(MeetupActionTypes.createMeetup),
         mergeMap((value: { form: IMeetup }) => this.meetupService.create({ form: value.form })
             .pipe(
                 map(meetup => { return createMeetupApi({ meetup }) }),
@@ -48,7 +47,7 @@ export class MeetupEffects {
     )
     );
     editMeetup$ = createEffect(() => this.actions$.pipe(
-        ofType(EDIT_MEETUP),
+        ofType(MeetupActionTypes.editMeetup),
         mergeMap((value: { form: IMeetup, meetup: IMeetup }) => this.meetupService.edit(value.form, value.meetup)
             .pipe(
                 map(meetup => { return editMeetupApi({ meetup }) }),
@@ -57,7 +56,7 @@ export class MeetupEffects {
     )
     );
     deleteMeetup$ = createEffect(() => this.actions$.pipe(
-        ofType(DELETE_MEETUP),
+        ofType(MeetupActionTypes.deleteMeetup),
         mergeMap((value: { id: number }) => this.meetupService.delete(value.id)
             .pipe(
                 map(meetup => { return deleteMeetupApi({ meetup }) }),

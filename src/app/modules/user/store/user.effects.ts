@@ -5,8 +5,8 @@ import { catchError, map, mergeMap } from 'rxjs/operators';
 import { RoleService } from '../services/role.service';
 import { UserService } from '../services/user.service';
 import {
-    ADD_ROLE_USER, CREATE_USER, DELETE_USER, GET_ALL_ROLES,
-    GET_ALL_USERS, UPDATE_USER, addRoleUserApi, createUserApi,
+    UserActionTypes,
+    addRoleUserApi, createUserApi,
     deleteUserApi, getAllRolesApi, getAllUsersApi, updateUserApi
 } from './user.actions';
 
@@ -14,7 +14,7 @@ import {
 export class UserEffects {
 
     getAllUsers$ = createEffect(() => this.actions$.pipe(
-        ofType(GET_ALL_USERS),
+        ofType(UserActionTypes.requestAllUsers),
         mergeMap(() => this.userService.getAll()
             .pipe(
                 map(users => { return getAllUsersApi({ users }) }),
@@ -23,7 +23,7 @@ export class UserEffects {
     )
     );
     updateUser$ = createEffect(() => this.actions$.pipe(
-        ofType(UPDATE_USER),
+        ofType(UserActionTypes.updateUser),
         mergeMap((value: { id: number, email: string, fio: string, password: string }) =>
             this.userService.update(value.id, value.email, value.fio, value.password)
                 .pipe(
@@ -35,7 +35,7 @@ export class UserEffects {
     )
     );
     createUser$ = createEffect(() => this.actions$.pipe(
-        ofType(CREATE_USER),
+        ofType(UserActionTypes.createUser),
         mergeMap((value: { fio: string, email: string, password: string }) =>
             this.userService.create(value.fio, value.email, value.password)
                 .pipe(
@@ -45,7 +45,7 @@ export class UserEffects {
     )
     );
     deleteUser$ = createEffect(() => this.actions$.pipe(
-        ofType(DELETE_USER),
+        ofType(UserActionTypes.deleteUser),
         mergeMap((value: { id: number }) =>
             this.userService.delete(value.id)
                 .pipe(
@@ -55,7 +55,7 @@ export class UserEffects {
     )
     );
     addRoleUser$ = createEffect(() => this.actions$.pipe(
-        ofType(ADD_ROLE_USER),
+        ofType(UserActionTypes.addRoleUser),
         mergeMap((value: { name: string, userId: number }) =>
             this.userService.addRole(value.name, value.userId)
                 .pipe(
@@ -68,7 +68,7 @@ export class UserEffects {
     )
     );
     getAllRoles$ = createEffect(() => this.actions$.pipe(
-        ofType(GET_ALL_ROLES),
+        ofType(UserActionTypes.getAllRoles),
         mergeMap(() =>
             this.roleService.getAll()
                 .pipe(
