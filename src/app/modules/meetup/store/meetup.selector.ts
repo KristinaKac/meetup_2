@@ -1,11 +1,12 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { State } from "./meetup.state";
+import { MeetupState } from "./meetup.state";
+import { meetupFeatureKey } from "./meetup.actions";
 
-const getMeetupState = createFeatureSelector<State>('meetup');
+const getMeetupState = createFeatureSelector<MeetupState>(meetupFeatureKey);
 
-export const getMeetups = createSelector(getMeetupState, (state) => {
+export const getMeetups = createSelector(getMeetupState, (state: MeetupState) => {
     return state.meetupList;
 });
-export const getCurrentPage = createSelector(getMeetupState, (state) => {
+export const getCurrentPage = createSelector(getMeetupState, (state: MeetupState) => {
     return state.currentPage;
 });

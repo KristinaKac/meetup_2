@@ -1,23 +1,22 @@
 import { createReducer, on } from "@ngrx/store";
-import { addRoleApi, createApi, deleteUserApi, getAllApi, getRolesApi, updateApi } from "./user.actions";
+import { addRoleUserApi, createUserApi, deleteUserApi, getAllRolesApi, getAllUsersApi, updateUserApi } from "./user.actions";
 import { initialState } from "./user.state";
-import { IRoles } from "../../../shared/models/user";
 
-const _userReducer = createReducer(initialState,
-    on(getAllApi, (state, action) => {
+export const userReducer = createReducer(initialState,
+    on(getAllUsersApi, (state, action) => {
         return {
             ...state,
             users: action.users
         }
     }),
-    on(updateApi, (state, action) => {
+    on(updateUserApi, (state, action) => {
         return {
             ...state,
             users: state.users!.map(user =>
                 user.id === action.user!.id ? action.user! : user)
         }
     }),
-    on(createApi, (state, action) => {
+    on(createUserApi, (state, action) => {
         return {
             ...state,
             users: [...state.users!, action.user!]
@@ -29,20 +28,16 @@ const _userReducer = createReducer(initialState,
             users: state.users!.filter((user) => user.id !== action.user!.id)
         }
     }),
-    on(addRoleApi, (state, action) => {
+    on(addRoleUserApi, (state, action) => {
         // доделать
         return {
             ...state,
         }
     }),
-    on(getRolesApi, (state, action) => {
+    on(getAllRolesApi, (state, action) => {
         return {
             ...state,
             roles: action.roles
         }
     }),
 )
-
-export function userReducer(state: any, action: any) {
-    return _userReducer(state, action);
-}

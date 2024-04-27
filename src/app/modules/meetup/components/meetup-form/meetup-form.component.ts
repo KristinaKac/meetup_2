@@ -1,14 +1,13 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, UntypedFormControl, Validators } from '@angular/forms';
-import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { Store } from '@ngrx/store';
 import { POLYMORPH_CONTEXT, PrizmDay, PrizmTime } from '@prizm-ui/components';
 import moment from 'moment';
 import 'moment/locale/ru';
 import { Subject } from 'rxjs';
 import { IMeetup } from '../../../../shared/models/meetup';
-import { create, edit, getAll } from '../../store/meetup.actions';
-import { State } from '../../store/meetup.state';
+import { createMeetup, editMeetup } from '../../store/meetup.actions';
+import { MeetupState } from '../../store/meetup.state';
 
 
 @Component({
@@ -26,7 +25,6 @@ export class MeetupFormComponent implements OnInit {
 
   public ngOnInit(): void {
     this.initForm();
-    this.getAll();
   }
 
   meetupForm!: FormGroup
@@ -36,9 +34,8 @@ export class MeetupFormComponent implements OnInit {
   @Input() meetup!: IMeetup | undefined;
 
   constructor(
-    @Inject(MAT_DATE_LOCALE) private _locale: string,
     @Inject(POLYMORPH_CONTEXT) readonly context: any,
-    private store: Store<{ meetup: State }>
+    private store: Store<{ meetup: MeetupState }>
   ) { }
 
   initForm() {
@@ -87,22 +84,19 @@ export class MeetupFormComponent implements OnInit {
       newDate[1].minutes
     );
     this.context.header === 'Создание митапа' ? this.createMeetup(this.meetupForm) : this.editMeetup(this.meetupForm);
+    this.context.completeWith();
   }
 
   getTime(): string | null {
     if (!this.meetup) { return null }
     return moment(this.meetup?.time).format('HH:mm');
   }
-
-  getAll() {
-    this.store.dispatch(getAll());
-  }
   
   createMeetup(form: FormGroup) {
-    this.store.dispatch(create({form: form.value}));
+    this.store.dispatch(createMeetup({form: form.value}));
   }
   editMeetup(form: FormGroup) {
-    this.store.dispatch(edit({form: form.value, meetup: this.context.context.meetup}));
+    this.store.dispatch(editMeetup({form: form.value, meetup: this.context.context.meetup}));
   }
 
   ngOnDestroy(): void {

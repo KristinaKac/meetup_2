@@ -4,10 +4,9 @@ import { Observable, Subject } from 'rxjs';
 import { IRole } from '../../../../shared/models/role';
 import { IUser } from '../../../../shared/models/user';
 import { SpinnerService } from '../../../../shared/services/spinner.service';
-import { addRole, create, deleteUser, getAll, getRoles, update } from '../../store/user.actions';
+import { addRoleUser, createUser, deleteUser, getAllRoles, getAllUsers, updateUser } from '../../store/user.actions';
 import { getRolesSelector, getUsers } from '../../store/user.selector';
-import { State } from '../../store/user.state';
-
+import { UserState } from '../../store/user.state';
 
 @Component({
   selector: 'app-users-page',
@@ -25,7 +24,7 @@ export class UsersPageComponent implements OnInit, OnDestroy {
 
   constructor(
     public spinnerService: SpinnerService,
-    private store: Store<{ meetup: State }>
+    private store: Store<{ meetup: UserState }>
   ) { }
 
   ngOnInit(): void {
@@ -33,11 +32,11 @@ export class UsersPageComponent implements OnInit, OnDestroy {
     this.getRoles();
   }
   getUsers() {
-    this.store.dispatch(getAll());
+    this.store.dispatch(getAllUsers());
     this.userList$ = this.store.select(getUsers);
   }
   getRoles() {
-    this.store.dispatch(getRoles());
+    this.store.dispatch(getAllRoles());
     this.roleList = this.store.select(getRolesSelector);
   }
   update(value: { id: number, fio: string, email: string, password: string, role: string }) {
@@ -45,13 +44,13 @@ export class UsersPageComponent implements OnInit, OnDestroy {
     this.addRole(value.role, value.id);
   }
   updateUser(id: number, email: string, fio: string, password: string) {
-    this.store.dispatch(update({ id, email, fio, password }));
+    this.store.dispatch(updateUser({ id, email, fio, password }));
   }
   createUser(value: { fio: string, email: string, password: string }) {
-    this.store.dispatch(create({ fio: value.fio, email: value.email, password: value.password }))
+    this.store.dispatch(createUser({ fio: value.fio, email: value.email, password: value.password }))
   }
   addRole(name: string, userId: number) {
-    this.store.dispatch(addRole({name, userId}));
+    this.store.dispatch(addRoleUser({name, userId}));
   }
   deleteUser(id: number) {
     this.store.dispatch(deleteUser({id}));

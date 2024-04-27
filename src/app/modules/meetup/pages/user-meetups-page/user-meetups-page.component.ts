@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, Injector, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { PolymorphComponent, PrizmDialogService, PrizmOverlayInsidePlacement } from '@prizm-ui/components';
@@ -8,9 +8,9 @@ import { SpinnerService } from '../../../../shared/services/spinner.service';
 import { AuthService } from '../../../auth/services/auth.service';
 import { MeetupFormComponent } from '../../components/meetup-form/meetup-form.component';
 import { MeetupService } from '../../services/meetup.service';
-import { deleteMeetup, getAll } from '../../store/meetup.actions';
+import { deleteMeetup, getAllMeetups } from '../../store/meetup.actions';
 import { getMeetups } from '../../store/meetup.selector';
-import { State } from '../../store/meetup.state';
+import { MeetupState } from '../../store/meetup.state';
 
 @Component({
   selector: 'app-user-meetups-page',
@@ -33,12 +33,12 @@ export class UserMeetupsPageComponent implements OnInit, OnDestroy {
     public authService: AuthService,
     public spinnerService: SpinnerService,
     public dialog: MatDialog,
-    public store: Store<{ meetup: State }>,
-    @Inject(PrizmDialogService) private readonly dialogService: PrizmDialogService
+    public store: Store<{ meetup: MeetupState }>,
+    @Inject(PrizmDialogService) private readonly dialogService: PrizmDialogService,
   ) { }
 
   ngOnInit(): void {
-    this.store.dispatch(getAll());
+    this.store.dispatch(getAllMeetups());
     this.meetupList$ = this.store.select(getMeetups);
   }
 

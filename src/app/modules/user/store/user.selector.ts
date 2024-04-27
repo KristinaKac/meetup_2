@@ -1,11 +1,12 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { State } from "./user.state";
+import { UserState } from "./user.state";
+import { userFeatureKey } from "./user.actions";
 
-const getUsersState = createFeatureSelector<State>('user');
+const getUsersState = createFeatureSelector<UserState>(userFeatureKey);
 
-export const getUsers = createSelector(getUsersState, (state) => {
+export const getUsers = createSelector(getUsersState, (state: UserState) => {
     return state.users;
 });
-export const getRolesSelector = createSelector(getUsersState, (state) => {
+export const getRolesSelector = createSelector(getUsersState, (state: UserState) => {
     return state.roles;
 });

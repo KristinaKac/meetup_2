@@ -1,11 +1,11 @@
 import { IMeetup } from "../../../shared/models/meetup";
 
-export interface State {
+export interface MeetupState {
     meetupList: IMeetup[] | null,
     currentPage: number,
 }
 
-export const initialState: State = {
+export const initialState: MeetupState = {
     meetupList: [],
     currentPage: 1
 }

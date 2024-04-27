@@ -10,8 +10,11 @@ import { UserFilterMeetupsPipe } from './pipes/user-filter-meetups.pipe';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
-import { PrizmAccordionModule, PrizmButtonModule, PrizmInputDateMultiComponent, PrizmInputLayoutDateComponent, PrizmInputLayoutDateTimeComponent, PrizmInputNumberModule, PrizmInputSelectModule, PrizmInputTextModule, PrizmSpinnerModule } from '@prizm-ui/components';
+import { PrizmAccordionModule, PrizmButtonModule, PrizmInputDateMultiComponent, 
+  PrizmInputLayoutDateComponent, PrizmInputLayoutDateTimeComponent, PrizmInputNumberModule, 
+  PrizmInputSelectModule, PrizmInputTextModule, PrizmSpinnerModule } from '@prizm-ui/components';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { MeetupStoreModule } from './store/meetup.store.module';
 
 
 
@@ -28,6 +31,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
   imports: [
     CommonModule,
     FormsModule,
+    MeetupStoreModule,
     ReactiveFormsModule,
     PrizmButtonModule,
     PrizmInputLayoutDateComponent,

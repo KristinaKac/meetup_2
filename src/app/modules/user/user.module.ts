@@ -15,6 +15,7 @@ import { PrizmInputPasswordModule } from '@prizm-ui/components';
 import { MatIconModule } from '@angular/material/icon';
 import { PrizmSpinnerModule } from '@prizm-ui/components';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { UserStoreModule } from './store/user.store.module';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
   ],
   imports: [
     CommonModule,
+    UserStoreModule,
     FormsModule,
     ReactiveFormsModule,
     PrizmButtonModule,
