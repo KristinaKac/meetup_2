@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { PrizmSelectStringify, PrizmSelectValueTransformver } from '@prizm-ui/components';
 import 'moment/locale/ru';
 import { Subject, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs';
 
@@ -13,12 +14,20 @@ import { Subject, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs';
 
 export class FilterFormComponent implements OnInit {
 
+  // readonly items = [
+  //   'По названию',
+  //   'По описанию',
+  //   'По местоположению',
+  //   'По дате',
+  //   'По автору'
+  // ];
+
   readonly items = [
-    'По названию',
-    'По описанию',
-    'По местоположению',
-    'По дате',
-    'По автору'
+    { key: 'name', title: 'По названию' },
+    { key: 'description', title: 'По описанию' },
+    { key: 'location', title: 'По местоположению' },
+    { key: 'time', title: 'По дате' },
+    { key: 'owner', title: 'По автору' },
   ];
 
   filterForm: FormGroup;
@@ -34,7 +43,19 @@ export class FilterFormComponent implements OnInit {
       criterion: new FormControl<'name' | 'description' | 'location' | 'time' | 'owner'>('name', [Validators.required])
     });
   }
+  readonly stringify: PrizmSelectStringify<{ key: string, title: string }> = (item: { key: string, title: string }) => {
+      if (!item) {
+        return '';
+      }
+      return item.title
+    };
+  readonly transformer: PrizmSelectValueTransformver<{ key: string, title: string }> = (item) => {
+      if (!item) { return '' }
+      return item.key
+    };
+
   ngOnInit(): void {
+
     this.filterForm.controls['search'].valueChanges
       .pipe(
         debounceTime(500),
@@ -42,26 +63,6 @@ export class FilterFormComponent implements OnInit {
         takeUntil(this.destroy))
       .subscribe((data) => {
         if (this.filterForm.invalid) { return }
-
-        switch (this.filterForm.value.criterion) {
-          case 'По названию':
-            this.filterForm.value.criterion = 'name'
-            break;
-          case 'По описанию':
-            this.filterForm.value.criterion = 'description'
-            break;
-          case 'По местоположению':
-            this.filterForm.value.criterion = 'location'
-            break;
-          case 'По дате':
-            this.filterForm.value.criterion = 'time'
-            break;
-          case 'По автору':
-            this.filterForm.value.criterion = 'owner'
-            break;
-          default:
-            break;
-        }
         this.filterEvent.emit({ search: data, criterion: this.filterForm.value.criterion })
       });
   }

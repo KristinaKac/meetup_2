@@ -11,8 +11,8 @@
     </prizm-input-layout>
 
     <prizm-input-layout label="Критерий">
-        <prizm-input-select #input formControlName="criterion" [items]="items"
-            [prizmHintCanShow]="true"></prizm-input-select>
+        <prizm-input-select #input formControlName="criterion" [stringify]="stringify" [items]="items"
+        [transformer]="transformer" [prizmHintCanShow]="true"></prizm-input-select>
         <ng-template [control]="input" prizmInputStatusText></ng-template>
     </prizm-input-layout>
 </form>
