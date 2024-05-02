@@ -35,14 +35,10 @@ export class FilterFormComponent implements OnInit {
     });
   }
   readonly stringify: PrizmSelectStringify<{ key: string, title: string }> = (item: { key: string, title: string }) => {
-    if (!item) {
-      return '';
-    }
-    return item.title
+    return item ? item.title : '';
   };
   readonly transformer: PrizmSelectValueTransformver<{ key: string, title: string }> = (item) => {
-    if (!item) { return '' }
-    return item.key
+    return item ? item.key : '';
   };
 
   ngOnInit(): void {
