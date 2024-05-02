@@ -8,10 +8,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AuthFormComponent {
-  authForm: FormGroup
+  public authForm: FormGroup
 
-  @Output() loginEvent = new EventEmitter();
-  @Output() registrationEvent = new EventEmitter();
+  @Output() loginEvent: EventEmitter<{email: string, password: string}> = new EventEmitter();
+  @Output() registrationEvent: EventEmitter<{email: string, password: string, fio: string}> = new EventEmitter();
   @Input() formType: 'login' | 'registration' = 'login';
 
 

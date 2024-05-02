@@ -1,11 +1,9 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MAT_DATE_LOCALE } from '@angular/material/core';
-import { Store } from '@ngrx/store';
 import { PrizmSelectStringify, PrizmSelectValueTransformver } from '@prizm-ui/components';
 import 'moment/locale/ru';
 import { Subject, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs';
-import { MeetupState } from '../../store/meetup';
+import { IFilterMeetupItems } from '../../../../shared/models/meetup';
 
 @Component({
   selector: 'app-filter-form',
@@ -16,7 +14,7 @@ import { MeetupState } from '../../store/meetup';
 
 export class FilterFormComponent implements OnInit {
 
-  readonly items = [
+  readonly items: IFilterMeetupItems[] = [
     { key: 'name', title: 'По названию' },
     { key: 'description', title: 'По описанию' },
     { key: 'location', title: 'По местоположению' },
@@ -25,11 +23,10 @@ export class FilterFormComponent implements OnInit {
   ];
 
   filterForm: FormGroup;
-
-  @Output() filterEvent = new EventEmitter();
-  @Output() resetEvent = new EventEmitter();
+  @Output() filterEvent: EventEmitter<
+    { search: string, criterion: 'name' | 'description' | 'location' | 'time' | 'owner' }
+  > = new EventEmitter();
   private destroy: Subject<void> = new Subject();
-
 
   constructor() {
     this.filterForm = new FormGroup({
@@ -38,18 +35,17 @@ export class FilterFormComponent implements OnInit {
     });
   }
   readonly stringify: PrizmSelectStringify<{ key: string, title: string }> = (item: { key: string, title: string }) => {
-      if (!item) {
-        return '';
-      }
-      return item.title
-    };
+    if (!item) {
+      return '';
+    }
+    return item.title
+  };
   readonly transformer: PrizmSelectValueTransformver<{ key: string, title: string }> = (item) => {
-      if (!item) { return '' }
-      return item.key
-    };
+    if (!item) { return '' }
+    return item.key
+  };
 
   ngOnInit(): void {
-
     this.filterForm.controls['search'].valueChanges
       .pipe(
         debounceTime(500),
@@ -57,7 +53,7 @@ export class FilterFormComponent implements OnInit {
         takeUntil(this.destroy))
       .subscribe((data) => {
         if (this.filterForm.invalid) { return }
-        this.filterEvent.emit({ search: data, criterion: this.filterForm.value.criterion});
+        this.filterEvent.emit({ search: data, criterion: this.filterForm.value.criterion });
       });
   }
   ngOnDestroy(): void {

@@ -1,10 +1,8 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, inject } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { IRole } from '../../../../shared/models/role';
 import { IUser } from '../../../../shared/models/user';
-import { PrizmIconsFullRegistry } from '@prizm-ui/icons/core';
-import { prizmIconsCircleCheckEmpty, prizmIconsCircleXmark } from '@prizm-ui/icons/base/source';
 
 @Component({
   selector: 'app-user-form',
@@ -14,15 +12,17 @@ import { prizmIconsCircleCheckEmpty, prizmIconsCircleXmark } from '@prizm-ui/ico
 })
 export class UserFormComponent {
 
-  userForm!: FormGroup;
+  public userForm!: FormGroup;
   public items: String[] = [];
-  @Input() isCreate = false;
-  @Input() roleList!: Observable<IRole[]>;
+  @Input() isCreate: boolean = false;
+  @Input() roleList!: Observable<IRole[] | null>;
   @Input() user!: IUser;
 
-  @Output() updateEvent = new EventEmitter();
-  @Output() createUserEvent = new EventEmitter();
-  @Output() closeFormEvent = new EventEmitter();
+  @Output() updateEvent: EventEmitter<
+  { id: number, fio: string, email: string, password?: string, role: string }
+  > = new EventEmitter();
+  @Output() createUserEvent: EventEmitter<{ fio: string, email: string, password: string }> = new EventEmitter();
+  @Output() closeFormEvent: EventEmitter<boolean> = new EventEmitter();
   private destroy: Subject<void> = new Subject();
 
   ngOnInit(): void {
@@ -32,7 +32,7 @@ export class UserFormComponent {
           takeUntil(this.destroy)
         )
         .subscribe((roles) => {
-          this.items = roles.map(role => role.name)
+          this.items = roles!.map(role => role.name)
         })
     }
 
@@ -44,14 +44,14 @@ export class UserFormComponent {
     });
   }
 
-  check(roleName: string) {
+  check(roleName: string): boolean | undefined {
     return this.user.roles?.some(role => role.name === roleName);
   }
-  closeForm() {
+  closeForm(): void {
     this.closeFormEvent.emit(false)
   }
 
-  onSubmit() {
+  onSubmit(): void {
     if (!this.isCreate) {
       this.submitEdit();
     } else {
@@ -59,7 +59,7 @@ export class UserFormComponent {
     }
   }
 
-  submitEdit() {
+  submitEdit(): void {
     if (this.userForm.value.password === '') {
       this.updateEvent.emit({
         id: this.user.id,
@@ -81,7 +81,7 @@ export class UserFormComponent {
       this.closeForm()
     }
   }
-  submitCreate() {
+  submitCreate(): void {
     if (this.userForm.value.password.length < 4) {
       return;
     }

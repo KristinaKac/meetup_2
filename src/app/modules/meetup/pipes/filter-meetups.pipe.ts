@@ -7,10 +7,10 @@ import { IMeetup } from '../../../shared/models/meetup';
 })
 export class FilterMeetupsPipe implements PipeTransform {
 
-  transform(meetups: IMeetup[], search: string, criterion: 'name' | 'description' | 'location' | 'time' | 'owner'): IMeetup[] | null | any {
+  transform(meetups: IMeetup[], search: string, criterion: 'name' | 'description' | 'location' | 'time' | 'owner'): IMeetup[] {
     let meetupList: IMeetup[] = meetups;
 
-    if (!meetupList) { return null }
+    if (!meetupList) { return [] }
     if (!criterion || !search) { return meetupList }
 
     switch (criterion) {

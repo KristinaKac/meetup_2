@@ -27,7 +27,7 @@ export class AuthService {
     if (!token) { return null }
     return this.parseJWT(token);
   }
-  public checkAdmin() {
+  public checkAdmin(): void {
     if (this.user?.roles) {
       this.isAdmin = this.user.roles.some(user => user.name === 'ADMIN');
     } else {
@@ -68,7 +68,7 @@ export class AuthService {
       )
   }
 
-  logout() {
+  logout(): void {
     localStorage.removeItem('token');
     this.router.navigate(['login']);
   }

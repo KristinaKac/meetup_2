@@ -4,6 +4,9 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
+  HttpHeaders,
+  HttpContext,
+  HttpParams,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthService } from '../../modules/auth/services/auth.service';
@@ -15,7 +18,13 @@ export class authInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService) { }
 
   intercept(
-    request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    request: HttpRequest<{
+      headers?: HttpHeaders; context?: HttpContext; reportProgress?: boolean; params?: HttpParams;
+      responseType?: "arraybuffer" | "blob" | "text" | "json"; withCredentials?: boolean; transferCache?: boolean;
+    }>, next: HttpHandler): Observable<HttpEvent<{
+      headers?: HttpHeaders; context?: HttpContext; reportProgress?: boolean; params?: HttpParams;
+      responseType?: "arraybuffer" | "blob" | "text" | "json"; withCredentials?: boolean; transferCache?: boolean;
+    }>> {
     const token: string | null = this.authService.token;
     const isApiUrl = request.url.startsWith(environment.backendOrigin);
     if (token && isApiUrl) {

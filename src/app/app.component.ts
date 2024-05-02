@@ -9,7 +9,5 @@ import { SpinnerService } from './shared/services/spinner.service';
 export class AppComponent {
   title = 'meetup';
 
-  constructor(
-    public spinnerService: SpinnerService
-  ) {}
+  constructor() {}
 }

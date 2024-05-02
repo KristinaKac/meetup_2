@@ -31,10 +31,10 @@ export const getAllUsersApi:
 
 export const updateUser:
     ActionCreator<UserActionTypes.updateUser,
-        (props: { id: number, email: string, fio: string, password: string }) => {
-            id: number, email: string, fio: string, password: string;
+        (props: { id: number, email: string, fio: string, password?: string }) => {
+            id: number, email: string, fio: string, password?: string;
         } & TypedAction<UserActionTypes.updateUser>
-    > = createAction(UserActionTypes.updateUser, props<{ id: number, email: string, fio: string, password: string }>());
+    > = createAction(UserActionTypes.updateUser, props<{ id: number, email: string, fio: string, password?: string }>());
 
 export const updateUserApi:
     ActionCreator<UserActionTypes.updateUserApi,

@@ -17,7 +17,7 @@ export class MeetupsPageComponent implements OnInit, OnDestroy {
 
   public currentPage$: number = 1;
 
-  public meetupList$!: Observable<IMeetup[] | any>;
+  public meetupList$!: Observable<IMeetup[] | null>;
   private destroy: Subject<void> = new Subject();
 
   public searchFilter!: string;
@@ -33,18 +33,18 @@ export class MeetupsPageComponent implements OnInit, OnDestroy {
     this.meetupList$ = this.store.select(getMeetups);
     this.store.select(getCurrentPage).pipe(takeUntil(this.destroy)).subscribe((page: number) => this.currentPage$ = page);
   }
-  subscribe(value: { idMeetup: number, idUser: number }) {
+  subscribe(value: { idMeetup: number, idUser: number }): void {
     this.store.dispatch(subscribeMeetup({idMeetup: value.idMeetup, idUser: value.idUser}))
   }
-  unsubscribe(value: { idMeetup: number, idUser: number }) {
+  unsubscribe(value: { idMeetup: number, idUser: number }): void {
     this.store.dispatch(unsubscribeMeetup({idMeetup: value.idMeetup, idUser: value.idUser}))
   }
-  filter(value: { search: string, criterion: 'name' | 'description' | 'location' | 'time' | 'owner' }) {
+  filter(value: { search: string, criterion: 'name' | 'description' | 'location' | 'time' | 'owner' }): void {
     this.searchFilter = value.search;
     this.criterionFilter = value.criterion;
     this.setCurrentPage(1);
   }
-  setCurrentPage(page: number) {
+  setCurrentPage(page: number): void {
     this.store.dispatch(setCurrentPageMeetup({page}))
   }
   ngOnDestroy(): void {

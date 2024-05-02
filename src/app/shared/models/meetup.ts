@@ -25,4 +25,8 @@ export interface IMeetup {
         }
     ] | []
 }
+export interface IFilterMeetupItems {
+        key: string,
+        title: string
+}
 

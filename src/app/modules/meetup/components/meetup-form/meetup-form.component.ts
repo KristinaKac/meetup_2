@@ -1,13 +1,14 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { POLYMORPH_CONTEXT, PrizmDay, PrizmTime } from '@prizm-ui/components';
+import { POLYMORPH_CONTEXT, PolymorphContent, PrizmDay, PrizmTime } from '@prizm-ui/components';
 import moment from 'moment';
+import { Moment } from 'moment-timezone';
 import 'moment/locale/ru';
 import { Subject } from 'rxjs';
 import { IMeetup } from '../../../../shared/models/meetup';
-import { createMeetup, editMeetup } from '../../store/meetup.actions';
 import { MeetupState } from '../../store/meetup';
+import { createMeetup, editMeetup } from '../../store/meetup.actions';
 
 
 @Component({
@@ -19,27 +20,24 @@ import { MeetupState } from '../../store/meetup';
 export class MeetupFormComponent implements OnInit {
 
   private destroy: Subject<void> = new Subject();
+  public meetupForm!: FormGroup
+  public today: Date = new Date();
+  @Input() meetup!: IMeetup | undefined;
 
-  public requiredInputControl = new UntypedFormControl(2, Validators.required);
-  public value = new UntypedFormControl([new PrizmDay(2022, 2, 15), new PrizmTime(12, 30)]);
+  public value: UntypedFormControl =
+    new UntypedFormControl([new PrizmDay(2022, 2, 15), new PrizmTime(12, 30)]);
 
   public ngOnInit(): void {
     this.initForm();
   }
 
-  meetupForm!: FormGroup
-  today = new Date();
-
-  @Output() meetupEvent = new EventEmitter();
-  @Input() meetup!: IMeetup | undefined;
-
   constructor(
-    @Inject(POLYMORPH_CONTEXT) readonly context: any,
+    @Inject(POLYMORPH_CONTEXT) readonly context: PolymorphContent,
     private store: Store<{ meetup: MeetupState }>
   ) { }
 
-  initForm() {
-    let date = moment();
+  initForm(): void {
+    let date: Moment = moment();
     let contextMeetup = {
       name: '',
       description: '',
@@ -75,7 +73,7 @@ export class MeetupFormComponent implements OnInit {
   onSubmit() {
     if (this.meetupForm.invalid) { return }
 
-    const newDate = this.meetupForm.value.time.value;
+    const newDate: [PrizmDay, PrizmTime] = this.meetupForm.value.time.value;
     this.meetupForm.value.time = new Date(
       newDate[0].year,
       newDate[0].month,
@@ -91,12 +89,12 @@ export class MeetupFormComponent implements OnInit {
     if (!this.meetup) { return null }
     return moment(this.meetup?.time).format('HH:mm');
   }
-  
-  createMeetup(form: FormGroup) {
-    this.store.dispatch(createMeetup({form: form.value}));
+
+  createMeetup(form: FormGroup): void {
+    this.store.dispatch(createMeetup({ form: form.value }));
   }
-  editMeetup(form: FormGroup) {
-    this.store.dispatch(editMeetup({form: form.value, meetup: this.context.context.meetup}));
+  editMeetup(form: FormGroup): void {
+    this.store.dispatch(editMeetup({ form: form.value, meetup: this.context.context.meetup }));
   }
 
   ngOnDestroy(): void {

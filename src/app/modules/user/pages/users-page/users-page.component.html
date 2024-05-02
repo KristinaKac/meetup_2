@@ -15,8 +15,8 @@
         <prizm-spinner [inheritColor]="true" size="l"> </prizm-spinner>
     </div>
 
-    <div class="table">
-        <div class="row" *ngFor="let user of userList$  | async | paginate: {itemsPerPage: 15, currentPage}"
+    <div class="table" *ngIf="userList$ | async as userList">
+        <div class="row" *ngFor="let user of userList | paginate: {itemsPerPage: 15, currentPage}"
             [user]="user" [roleList]="roleList" app-user-table-row [isCreate]="false" (updateEvent)="update($event)"
             (deleteEvent)="deleteUser($event)">
         </div>

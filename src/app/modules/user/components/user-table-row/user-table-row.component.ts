@@ -11,22 +11,22 @@ import { IUser } from '../../../../shared/models/user';
 })
 export class UserTableRowComponent {
 
-  @Input() roleList!: Observable<IRole[]>;
+  @Input() roleList!: Observable<IRole[] | null>;
   @Input() user!: IUser;
   @Input() isCreate!: boolean;
-  isEdit = false;
+  public isEdit: boolean = false;
 
-  @Output() updateEvent = new EventEmitter();
-  @Output() deleteEvent = new EventEmitter();
+  @Output() updateEvent: EventEmitter<{ id: number, fio: string, email: string, password?: string, role: string }> = new EventEmitter();
+  @Output() deleteEvent: EventEmitter<number> = new EventEmitter();
 
-  update(value: IUser) {
+  update(value: {id: number, fio: string, email: string, password?: string, role: string}): void {
     this.updateEvent.emit(value)
   }
-  delete() {
+  delete(): void {
     if (!confirm('Вы действительно хотите удалить данного пользователя?')) { return }
     this.deleteEvent.emit(this.user.id)
   }
-  closeForm() {
+  closeForm(): void {
     this.isEdit = false;
   }
 }

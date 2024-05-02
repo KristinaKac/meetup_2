@@ -14,7 +14,7 @@ export class HeaderComponent implements OnInit {
     this.authService.checkAdmin();
   }
 
-  logout() {
+  logout(): void {
     this.authService.logout();
     this.authService.checkAdmin();
   }

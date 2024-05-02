@@ -14,20 +14,10 @@ export class UserService {
   baseURL: string = `${environment.backendOrigin}/user`;
   baseAuthURL: string = `${environment.backendOrigin}/auth`;
 
-  // private dataSubject = new BehaviorSubject<IUser[]>([]);
-  // private _userList$: Observable<IUser[]> = this.dataSubject.asObservable();
-
   constructor(
     private http: HttpClient,
     private authService: AuthService
   ) { }
-
-  // set userList(value: IUser[]) {
-  //   this.dataSubject.next(value);
-  // }
-  // get userList(): Observable<IUser[]> {
-  //   return this._userList$;
-  // }
 
   getAll(): Observable<IUser[] | null> {
     return this.http
