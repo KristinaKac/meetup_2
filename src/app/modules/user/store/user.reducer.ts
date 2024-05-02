@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
-import { addRoleUserApi, createUserApi, deleteUserApi, getAllRolesApi, getAllUsersApi, updateUserApi } from "./user.actions";
 import { UserState } from "./user";
+import { addRoleUserApi, createUserApi, deleteUserApi, getAllRolesApi, getAllUsersApi, updateUserApi } from "./user.actions";
 
 export const initialState: UserState = {
     users: [],
@@ -18,7 +18,7 @@ export const userReducer = createReducer(initialState,
         return {
             ...state,
             users: state.users!.map(user =>
-                user.id === action.user!.id ? action.user! : user)
+                user.id === action.user!.id ? { ...user, user: action.user!, roles: user.roles } : user)
         }
     }),
     on(createUserApi, (state, action) => {
@@ -34,9 +34,13 @@ export const userReducer = createReducer(initialState,
         }
     }),
     on(addRoleUserApi, (state, action) => {
-        // доделать
+
         return {
             ...state,
+            users: state.users!.map(user =>
+                user.id === action.role?.userId ? 
+                 {...user, roles: user.roles} 
+                    : user)
         }
     }),
     on(getAllRolesApi, (state, action) => {

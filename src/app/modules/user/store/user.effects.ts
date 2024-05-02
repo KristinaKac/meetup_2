@@ -60,7 +60,7 @@ export class UserEffects {
             this.userService.addRole(value.name, value.userId)
                 .pipe(
                     map(role => {
-                        role?.name === 'ADMIN' ? role.id = 1 : role!.id = 2;
+                        role?.name === 'ADMIN' ? role.id = 1 : role?.name === 'USER' ? role!.id = 2 : role!.id = 215;
                         return addRoleUserApi({ role });
                     }),
                     catchError(() => EMPTY)
