@@ -16,11 +16,11 @@ import { UserState } from '../../store/user';
 })
 export class UsersPageComponent implements OnInit, OnDestroy {
   public tableTitles: string[] = ['Имя', 'Почта', 'Пароль', 'Роли', 'Действия'];
-  public isEdit: boolean = false;
+  public isEdit = false;
   public userList$!: Observable<IUser[] | null>;
   public roleList!: Observable<IRole[] | null>;
   private destroy: Subject<void> = new Subject();
-  public currentPage: number = 1;
+  public currentPage = 1;
 
   constructor(
     public spinnerService: SpinnerService,

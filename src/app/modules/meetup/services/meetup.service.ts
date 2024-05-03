@@ -9,7 +9,7 @@ import { IMeetup } from '../../../shared/models/meetup';
 })
 export class MeetupService {
 
-  baseURL: string = `${environment.backendOrigin}/meetup`;
+  baseURL = `${environment.backendOrigin}/meetup`;
 
   constructor(
     private http: HttpClient,
@@ -19,13 +19,15 @@ export class MeetupService {
     return this.http
       .get<IMeetup[]>(`${this.baseURL}`)
       .pipe(
-        map((data) => {
+        map((data: IMeetup[]) => {
           return data.sort((a: IMeetup, b: IMeetup) =>
             new Date(b.time) > new Date(a.time) ? 1 : -1
           )
         }),
-        catchError((err): Observable<null> => {
-          alert(err.error.message);
+        catchError((err: Error): Observable<null> => {
+          if (err instanceof Error) {
+            alert(err.message)
+          }
           return of(null);
         })
       )
@@ -35,8 +37,10 @@ export class MeetupService {
     return this.http
       .put<IMeetup>(`${this.baseURL}`, { idMeetup, idUser })
       .pipe(
-        catchError((err): Observable<null> => {
-          alert(err.error.message);
+        catchError((err: Error): Observable<null> => {
+          if (err instanceof Error) {
+            alert(err.message)
+          }
           return of(null);
         })
       )
@@ -46,14 +50,15 @@ export class MeetupService {
     return this.http
       .delete<IMeetup>(`${this.baseURL}`, { body: { idMeetup, idUser } })
       .pipe(
-        catchError((err): Observable<null> => {
-          alert(err.error.message);
+        catchError((err: Error): Observable<null> => {
+          if (err instanceof Error) {
+            alert(err.message)
+          }
           return of(null);
         })
       );
   }
-  create(value: {form: IMeetup}): Observable<IMeetup | null> {
-    console.log(value.form)
+  create(value: { form: IMeetup }): Observable<IMeetup | null> {
     return this.http
       .post<IMeetup>(`${this.baseURL}`,
         {
@@ -68,12 +73,14 @@ export class MeetupService {
           reason_to_come: value.form.reason_to_come
         })
       .pipe(
-        map(item => {
+        map((item: IMeetup) => {
           item.users = [];
           return item
         }),
-        catchError((err): Observable<null> => {
-          alert(err.error.message);
+        catchError((err: Error): Observable<null> => {
+          if (err instanceof Error) {
+            alert(err.message)
+          }
           return of(null);
         })
       )
@@ -93,12 +100,14 @@ export class MeetupService {
           reason_to_come: form.reason_to_come,
         })
       .pipe(
-        map(item => {
-          item.owner = meetup!.owner;
+        map((item: IMeetup) => {
+          meetup ? item.owner = meetup.owner : item.owner;
           return item
         }),
-        catchError((err): Observable<null> => {
-          alert(err.error.message);
+        catchError((err: Error): Observable<null> => {
+          if (err instanceof Error) {
+            alert(err.message)
+          }
           return of(null);
         })
       )
@@ -107,8 +116,10 @@ export class MeetupService {
     return this.http
       .delete<IMeetup>(`${this.baseURL}/${id}`)
       .pipe(
-        catchError((err): Observable<null> => {
-          alert(err.error.message);
+        catchError((err: Error): Observable<null> => {
+          if (err instanceof Error) {
+            alert(err.message)
+          }
           return of(null);
         })
       )

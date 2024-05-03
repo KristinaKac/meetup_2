@@ -9,6 +9,8 @@ import {
     addRoleUserApi, createUserApi,
     deleteUserApi, getAllRolesApi, getAllUsersApi, updateUserApi
 } from './user.actions';
+import { IUser } from '../../../shared/models/user';
+import { IRole } from '../../../shared/models/role';
 
 @Injectable()
 export class UserEffects {
@@ -17,7 +19,7 @@ export class UserEffects {
         ofType(UserActionTypes.requestAllUsers),
         mergeMap(() => this.userService.getAll()
             .pipe(
-                map(users => { return getAllUsersApi({ users }) }),
+                map((users: IUser[] | null) => { return getAllUsersApi({ users }) }),
                 catchError(() => EMPTY)
             ))
     )
@@ -27,7 +29,7 @@ export class UserEffects {
         mergeMap((value: { id: number, email: string, fio: string, password: string }) =>
             this.userService.update(value.id, value.email, value.fio, value.password)
                 .pipe(
-                    map(user => {
+                    map((user: IUser | null) => {
                         return updateUserApi({ user })
                     }),
                     catchError(() => EMPTY)
@@ -39,7 +41,7 @@ export class UserEffects {
         mergeMap((value: { fio: string, email: string, password: string }) =>
             this.userService.create(value.fio, value.email, value.password)
                 .pipe(
-                    map(user => { return createUserApi({ user }) }),
+                    map((user: IUser | null) => { return createUserApi({ user }) }),
                     catchError(() => EMPTY)
                 ))
     )
@@ -49,7 +51,7 @@ export class UserEffects {
         mergeMap((value: { id: number }) =>
             this.userService.delete(value.id)
                 .pipe(
-                    map(user => { return deleteUserApi({ user }) }),
+                    map((user: IUser | null) => { return deleteUserApi({ user }) }),
                     catchError(() => EMPTY)
                 ))
     )
@@ -59,7 +61,7 @@ export class UserEffects {
         mergeMap((value: { name: string, userId: number }) =>
             this.userService.addRole(value.name, value.userId)
                 .pipe(
-                    map(role => {
+                    map((role: IRole | null) => {
                         role?.name === 'ADMIN' ? role.id = 1 : role?.name === 'USER' ? role!.id = 2 : role!.id = 215;
                         return addRoleUserApi({ role });
                     }),
@@ -72,7 +74,7 @@ export class UserEffects {
         mergeMap(() =>
             this.roleService.getAll()
                 .pipe(
-                    map(roles => { return getAllRolesApi({ roles }); }),
+                    map((roles: IRole[] | null) => { return getAllRolesApi({ roles }); }),
                     catchError(() => EMPTY)
                 ))
     )

@@ -8,13 +8,11 @@ export class SpinnerService {
   private _loading = new BehaviorSubject<boolean>(false);
   public readonly loading$: Observable<boolean> = this._loading.asObservable();
 
-  constructor() {}
-
-  show() {
+  show(): void {
     this._loading.next(true);
   }
 
-  hide() {
+  hide(): void {
     this._loading.next(false);
   }
 }

@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { IRole } from '../../../../shared/models/role';
-import { IUser } from '../../../../shared/models/user';
+import { IRoles, IUser } from '../../../../shared/models/user';
 
 @Component({
   selector: 'app-user-form',
@@ -10,16 +10,16 @@ import { IUser } from '../../../../shared/models/user';
   styleUrl: './user-form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UserFormComponent {
+export class UserFormComponent implements OnInit, OnDestroy {
 
   public userForm!: FormGroup;
-  public items: String[] = [];
-  @Input() isCreate: boolean = false;
+  public items = [''];
+  @Input() isCreate = false;
   @Input() roleList!: Observable<IRole[] | null>;
   @Input() user!: IUser;
 
   @Output() updateEvent: EventEmitter<
-  { id: number, fio: string, email: string, password?: string, role: string }
+    { id: number, fio: string, email: string, password?: string, role: string }
   > = new EventEmitter();
   @Output() createUserEvent: EventEmitter<{ fio: string, email: string, password: string }> = new EventEmitter();
   @Output() closeFormEvent: EventEmitter<boolean> = new EventEmitter();
@@ -31,8 +31,8 @@ export class UserFormComponent {
         .pipe(
           takeUntil(this.destroy)
         )
-        .subscribe((roles) => {
-          this.items = roles!.map(role => role.name)
+        .subscribe((roles: IRole[] | null) => {
+          this.items = roles!.map((role: IRole) => role.name)
         })
     }
 
@@ -45,7 +45,7 @@ export class UserFormComponent {
   }
 
   check(roleName: string): boolean | undefined {
-    return this.user.roles?.some(role => role.name === roleName);
+    return this.user.roles?.some((role: IRoles) => role.name === roleName);
   }
   closeForm(): void {
     this.closeFormEvent.emit(false)

@@ -9,7 +9,6 @@ import { FilterMeetupsPipe } from './pipes/filter-meetups.pipe';
 import { UserFilterMeetupsPipe } from './pipes/user-filter-meetups.pipe';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatIconModule } from '@angular/material/icon';
 import { PrizmAccordionModule, PrizmButtonModule, PrizmInputDateMultiComponent, 
   PrizmInputLayoutDateComponent, PrizmInputLayoutDateTimeComponent, PrizmInputNumberModule, 
   PrizmInputSelectModule, PrizmInputTextModule, PrizmSpinnerModule } from '@prizm-ui/components';

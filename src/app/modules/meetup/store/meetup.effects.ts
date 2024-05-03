@@ -14,7 +14,7 @@ export class MeetupEffects {
         ofType(MeetupActionTypes.requestAllMeetups),
         mergeMap(() => this.meetupService.getAll()
             .pipe(
-                map(meetupList => { return getAllMeetupsApi({ meetupList }) }),
+                map((meetupList: IMeetup[] | null) => { return getAllMeetupsApi({ meetupList }) }),
                 catchError(() => EMPTY)
             ))
     )
@@ -23,7 +23,7 @@ export class MeetupEffects {
         ofType(MeetupActionTypes.subscribeMeetup),
         mergeMap((value: { idMeetup: number, idUser: number }) => this.meetupService.subscribe(value.idMeetup, value.idUser)
             .pipe(
-                map(meetup => { return subscribeMeetupApi({ meetup }) }),
+                map((meetup: IMeetup | null) => { return subscribeMeetupApi({ meetup }) }),
                 catchError(() => EMPTY)
             ))
     )
@@ -32,7 +32,7 @@ export class MeetupEffects {
         ofType(MeetupActionTypes.unsubscribeMeetup),
         mergeMap((value: { idMeetup: number, idUser: number }) => this.meetupService.unsubscribe(value.idMeetup, value.idUser)
             .pipe(
-                map(meetup => { return subscribeMeetupApi({ meetup }) }),
+                map((meetup: IMeetup | null) => { return subscribeMeetupApi({ meetup }) }),
                 catchError(() => EMPTY)
             ))
     )
@@ -41,7 +41,7 @@ export class MeetupEffects {
         ofType(MeetupActionTypes.createMeetup),
         mergeMap((value: { form: IMeetup }) => this.meetupService.create({ form: value.form })
             .pipe(
-                map(meetup => { return createMeetupApi({ meetup }) }),
+                map((meetup: IMeetup | null) => { return createMeetupApi({ meetup }) }),
                 catchError(() => EMPTY)
             ))
     )
@@ -50,7 +50,7 @@ export class MeetupEffects {
         ofType(MeetupActionTypes.editMeetup),
         mergeMap((value: { form: IMeetup, meetup: IMeetup }) => this.meetupService.edit(value.form, value.meetup)
             .pipe(
-                map(meetup => { return editMeetupApi({ meetup }) }),
+                map((meetup: IMeetup | null) => { return editMeetupApi({ meetup }) }),
                 catchError(() => EMPTY)
             ))
     )
@@ -59,7 +59,7 @@ export class MeetupEffects {
         ofType(MeetupActionTypes.deleteMeetup),
         mergeMap((value: { id: number }) => this.meetupService.delete(value.id)
             .pipe(
-                map(meetup => { return deleteMeetupApi({ meetup }) }),
+                map((meetup: IMeetup | null) => { return deleteMeetupApi({ meetup }) }),
                 catchError(() => EMPTY)
             ))
     )

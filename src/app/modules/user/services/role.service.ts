@@ -9,7 +9,7 @@ import { IRole } from '../../../shared/models/role';
 })
 export class RoleService {
 
-  baseURL: string = `${environment.backendOrigin}/role`;
+  baseURL = `${environment.backendOrigin}/role`;
 
   constructor(
     private http: HttpClient
@@ -18,8 +18,10 @@ export class RoleService {
   getAll(): Observable<IRole[] | null> {
     return this.http
       .get<IRole[]>(`${this.baseURL}`)
-      .pipe(catchError((err): Observable<null> => {
-        alert(err.error.message);
+      .pipe(catchError((err: Error): Observable<null> => {
+        if (err instanceof Error) {
+          alert(err.message)
+        }
         return of(null);
       })
       )

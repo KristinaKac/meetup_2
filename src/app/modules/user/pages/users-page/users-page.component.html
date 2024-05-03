@@ -16,9 +16,8 @@
     </div>
 
     <div class="table" *ngIf="userList$ | async as userList">
-        <div class="row" *ngFor="let user of userList | paginate: {itemsPerPage: 15, currentPage}"
-            [user]="user" [roleList]="roleList" app-user-table-row [isCreate]="false" (updateEvent)="update($event)"
-            (deleteEvent)="deleteUser($event)">
-        </div>
+        <app-user-table-row class="row" *ngFor="let user of userList | paginate: {itemsPerPage: 15, currentPage}"
+            [user]="user" [roleList]="roleList" [isCreate]="false" (updateEvent)="update($event)"
+            (deleteEvent)="deleteUser($event)"></app-user-table-row>
     </div>
 </section>

@@ -14,12 +14,12 @@
     <div class="form_control">
 
         <prizm-input-layout label="Почта">
-            <input formControlName="email" type="email" [required]="true" prizmInput />
+            <input formControlName="email" type="email" [email]="true" [required]="true" prizmInput />
         </prizm-input-layout>
 
         <div class="error" *ngIf="authForm.controls['email'].invalid && authForm.controls['email'].touched">
             <div *ngIf="authForm.controls['email'].hasError('required')">Необходимо заполнить поле 'почта'</div>
-            <div *ngIf="authForm.controls['email'].hasError('email')">Пожалуйста, укажите корректный адрес</div>
+            <div *ngIf="authForm.controls['email'].hasError('pattern')">Пожалуйста, укажите корректный адрес</div>
         </div>
     </div>
     <div class="form_control">

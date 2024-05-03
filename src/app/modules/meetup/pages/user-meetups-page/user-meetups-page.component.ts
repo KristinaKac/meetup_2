@@ -21,8 +21,8 @@ export class UserMeetupsPageComponent implements OnInit, OnDestroy {
 
   public positionVariants: PrizmOverlayInsidePlacement[] = Object.values(PrizmOverlayInsidePlacement);
   public position: PrizmOverlayInsidePlacement = this.positionVariants[8];
-  public backdrop: boolean = true;
-  public dismissible: boolean = true;
+  public backdrop = true;
+  public dismissible = true;
   public component: PolymorphComponent<MeetupFormComponent> =
     new PolymorphComponent(MeetupFormComponent);
   public meetupList$!: Observable<IMeetup[] | null>;

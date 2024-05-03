@@ -27,4 +27,4 @@ import { PrizmInputPasswordModule } from '@prizm-ui/components';
 })
 export class AuthModule {
 
- }
+}

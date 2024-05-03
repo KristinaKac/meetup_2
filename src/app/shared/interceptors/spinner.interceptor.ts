@@ -1,7 +1,7 @@
-import { HttpContextToken, HttpEvent, HttpHandler, HttpInterceptor, HttpInterceptorFn, HttpRequest, HttpResponse } from '@angular/common/http';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, finalize } from 'rxjs';
 import { SpinnerService } from '../services/spinner.service';
-import { Observable, finalize, tap } from 'rxjs';
 
 @Injectable()
 export class spinnerInterceptor implements HttpInterceptor {

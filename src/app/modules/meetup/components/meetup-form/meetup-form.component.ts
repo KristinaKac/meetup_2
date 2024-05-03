@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { POLYMORPH_CONTEXT, PolymorphContent, PrizmDay, PrizmTime } from '@prizm-ui/components';
@@ -17,7 +17,7 @@ import { createMeetup, editMeetup } from '../../store/meetup.actions';
   styleUrl: './meetup-form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MeetupFormComponent implements OnInit {
+export class MeetupFormComponent implements OnInit, OnDestroy {
 
   private destroy: Subject<void> = new Subject();
   public meetupForm!: FormGroup
@@ -70,7 +70,7 @@ export class MeetupFormComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  onSubmit(): void {
     if (this.meetupForm.invalid) { return }
 
     const newDate: [PrizmDay, PrizmTime] = this.meetupForm.value.time.value;

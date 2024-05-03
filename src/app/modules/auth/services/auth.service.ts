@@ -1,17 +1,17 @@
-import { Injectable } from '@angular/core';
-import { environment } from '../../../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { IUser } from '../../../shared/models/user';
 import { Observable, catchError, map, of, tap } from 'rxjs';
+import { environment } from '../../../../environments/environment.development';
+import { IRoles, IUser } from '../../../shared/models/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  baseURL: string = `${environment.backendOrigin}/auth`;
-  isAdmin: boolean = false;
+  baseURL = `${environment.backendOrigin}/auth`;
+  isAdmin = false;
 
   constructor(
     private http: HttpClient,
@@ -29,7 +29,7 @@ export class AuthService {
   }
   public checkAdmin(): void {
     if (this.user?.roles) {
-      this.isAdmin = this.user.roles.some(user => user.name === 'ADMIN');
+      this.isAdmin = this.user.roles.some((role: IRoles) => role.name === 'ADMIN');
     } else {
       this.isAdmin = false;
     }
@@ -45,8 +45,10 @@ export class AuthService {
         map((response: { token: string }) =>
           this.parseJWT(response.token)
         ),
-        catchError((err): Observable<null> => {
-          alert(err.error.message)
+        catchError((err: Error): Observable<null> => {
+          if (err instanceof Error) {
+            alert(err.message)
+          }
           return of(null);
         })
       )
@@ -61,8 +63,10 @@ export class AuthService {
         map((response: { token: string }) =>
           this.parseJWT(response.token)
         ),
-        catchError((err): Observable<null> => {
-          alert(err.error.message)
+        catchError((err: Error): Observable<null> => {
+          if (err instanceof Error) {
+            alert(err.message)
+          }
           return of(null);
         })
       )
@@ -73,10 +77,10 @@ export class AuthService {
     this.router.navigate(['login']);
   }
 
-  parseJWT(token: string) {
-    var base64Url = token.split('.')[1];
-    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    var jsonPayload = decodeURIComponent(
+  parseJWT(token: string): IUser {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(
       window
         .atob(base64)
         .split('')

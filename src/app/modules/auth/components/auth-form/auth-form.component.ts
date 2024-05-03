@@ -18,12 +18,12 @@ export class AuthFormComponent {
   constructor() {
     this.authForm = new FormGroup({
       fio: new FormControl<string>('', [Validators.minLength(2)]),
-      email: new FormControl<string>('', [Validators.required, Validators.email]),
+      email: new FormControl<string>('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)]),
       password: new FormControl<string>('', [Validators.required, Validators.minLength(4)])
     });
   }
 
-  onSubmit() {
+  onSubmit(): void {
     if (this.authForm.invalid) { return }
 
     switch (this.formType) {

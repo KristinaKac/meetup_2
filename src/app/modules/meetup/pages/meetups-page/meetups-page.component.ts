@@ -15,7 +15,7 @@ import { MeetupState } from '../../store/meetup';
 })
 export class MeetupsPageComponent implements OnInit, OnDestroy {
 
-  public currentPage$: number = 1;
+  public currentPage$ = 1;
 
   public meetupList$!: Observable<IMeetup[] | null>;
   private destroy: Subject<void> = new Subject();

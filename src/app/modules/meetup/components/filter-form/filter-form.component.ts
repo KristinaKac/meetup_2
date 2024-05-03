@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PrizmSelectStringify, PrizmSelectValueTransformver } from '@prizm-ui/components';
 import 'moment/locale/ru';
@@ -12,7 +12,7 @@ import { IFilterMeetupItems } from '../../../../shared/models/meetup';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class FilterFormComponent implements OnInit {
+export class FilterFormComponent implements OnInit, OnDestroy {
 
   readonly items: IFilterMeetupItems[] = [
     { key: 'name', title: 'По названию' },
@@ -37,7 +37,7 @@ export class FilterFormComponent implements OnInit {
   readonly stringify: PrizmSelectStringify<{ key: string, title: string }> = (item: { key: string, title: string }) => {
     return item ? item.title : '';
   };
-  readonly transformer: PrizmSelectValueTransformver<{ key: string, title: string }> = (item) => {
+  readonly transformer: PrizmSelectValueTransformver<{ key: string, title: string }> = (item: { key: string, title: string }) => {
     return item ? item.key : '';
   };
 
@@ -47,7 +47,7 @@ export class FilterFormComponent implements OnInit {
         debounceTime(500),
         distinctUntilChanged(),
         takeUntil(this.destroy))
-      .subscribe((data) => {
+      .subscribe((data: string) => {
         if (this.filterForm.invalid) { return }
         this.filterEvent.emit({ search: data, criterion: this.filterForm.value.criterion });
       });

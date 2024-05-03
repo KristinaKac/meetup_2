@@ -5,6 +5,7 @@ import 'moment-timezone';
 import { IMeetup } from '../../../../shared/models/meetup';
 import { AuthService } from '../../../auth/services/auth.service';
 import { MeetupFormComponent } from '../meetup-form/meetup-form.component';
+import { IUser } from '../../../../shared/models/user';
 
 moment.locale('ru');
 moment.tz.setDefault();
@@ -17,17 +18,17 @@ moment.tz.setDefault();
 })
 export class MeetupComponent implements OnInit {
 
-  public isOpen: boolean = false;
-  public isOldMeetup: boolean = false;
-  public isCanEdit: boolean = false;
+  public isOpen = false;
+  public isOldMeetup = false;
+  public isCanEdit = false;
 
   public positionVariants: PrizmOverlayInsidePlacement[] = Object.values(PrizmOverlayInsidePlacement);
   public position: PrizmOverlayInsidePlacement = this.positionVariants[8];
-  public backdrop: boolean = true;
-  public dismissible: boolean = true;
+  public backdrop = true;
+  public dismissible = true;
   public component: PolymorphComponent<MeetupFormComponent> = new PolymorphComponent(MeetupFormComponent);
 
-  @Input() isUserPage: boolean = false;
+  @Input() isUserPage = false;
   @Input() meetup!: IMeetup;
   @Output() subscribeEvent: EventEmitter<{ idMeetup: number, idUser: number }> = new EventEmitter();
   @Output() unsubscribeEvent: EventEmitter<{ idMeetup: number, idUser: number }> = new EventEmitter();
@@ -49,19 +50,19 @@ export class MeetupComponent implements OnInit {
   }
 
   get isSubscribe(): { id: number, email: string, password: string, fio: string } | undefined {
-    return this.meetup.users.find(item => item.id === this.authService.user?.id);
+    return this.meetup.users.find((item: IUser) => item.id === this.authService.user?.id);
   }
 
   subscribe(): void {
-    this.subscribeEvent.emit({
+    this.authService.user && this.subscribeEvent.emit({
       idMeetup: this.meetup.id,
-      idUser: this.authService.user!.id
+      idUser: this.authService.user.id
     });
   }
   unsubscribe(): void {
-    this.unsubscribeEvent.emit({
+    this.authService.user && this.unsubscribeEvent.emit({
       idMeetup: this.meetup.id,
-      idUser: this.authService.user!.id
+      idUser: this.authService.user.id
     })
   }
   delete(): void {
