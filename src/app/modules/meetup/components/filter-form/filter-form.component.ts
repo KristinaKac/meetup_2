@@ -51,6 +51,15 @@ export class FilterFormComponent implements OnInit, OnDestroy {
         if (this.filterForm.invalid) { return }
         this.filterEvent.emit({ search: data, criterion: this.filterForm.value.criterion });
       });
+    this.filterForm.controls['criterion'].valueChanges
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        takeUntil(this.destroy))
+      .subscribe((data: "name" | "description" | "location" | "time" | "owner") => {
+        if (this.filterForm.invalid) { return }
+        this.filterEvent.emit({ search: data === 'time' ? '' : this.filterForm.value.search?.toString(), criterion: data })
+      });
   }
   ngOnDestroy(): void {
     this.destroy.next();
