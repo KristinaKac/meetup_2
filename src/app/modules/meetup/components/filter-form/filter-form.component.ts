@@ -31,7 +31,7 @@ export class FilterFormComponent implements OnInit, OnDestroy {
   constructor() {
     this.filterForm = new FormGroup({
       search: new FormControl<string>(''),
-      criterion: new FormControl<'name' | 'description' | 'location' | 'time' | 'owner'>('name', [Validators.required])
+      criterion: new FormControl<'name' | 'description' | 'location' | 'time' | 'owner'>('name')
     });
   }
   readonly stringify: PrizmSelectStringify<{ key: string, title: string }> = (item: { key: string, title: string }) => {
@@ -58,7 +58,12 @@ export class FilterFormComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy))
       .subscribe((data: "name" | "description" | "location" | "time" | "owner") => {
         if (this.filterForm.invalid) { return }
-        this.filterEvent.emit({ search: data === 'time' ? '' : this.filterForm.value.search?.toString(), criterion: data })
+        this.filterEvent.emit({
+          search: data === 'time' || data === null ?
+            '' : this.filterForm.value.search?.toString(), criterion: data
+        });
+        data === 'time' || data === null && this.filterForm.controls['search'].setValue('');
+        
       });
   }
   ngOnDestroy(): void {

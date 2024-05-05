@@ -9,8 +9,11 @@
                     </div>
                     <div class="meetup_time header">{{getDate(meetup.time)}}</div>
                     <div class="meetup_description">Описание: {{meetup.description || 'Нет информации'}}</div>
-                    <div *ngIf="isOldMeetup" class="meetup_location header">Проведено</div>
-                    <div *ngIf="!isOldMeetup" class="meetup_location header">Местоположение: {{meetup.location}}</div>
+
+                    <div class="meetup_location header">
+                        <span *ngIf="isOldMeetup">Проведено</span>
+                        <span>Местоположение: {{meetup.location}}</span>
+                    </div>
                 </div>
                 <div>
                     <h3>Продолжительность митапа:</h3>

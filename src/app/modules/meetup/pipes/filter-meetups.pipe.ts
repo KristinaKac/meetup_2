@@ -35,6 +35,9 @@ export class FilterMeetupsPipe implements PipeTransform {
         break;
     }
 
+    // поиск только по митапам, которые должны произойти (прошедшие не входят в поиск)
+    // meetupList = meetupList.filter(meetup => new Date(meetup.time) > new Date())
+
     return meetupList;
   }
 }
