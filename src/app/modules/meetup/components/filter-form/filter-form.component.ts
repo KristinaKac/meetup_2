@@ -62,7 +62,7 @@ export class FilterFormComponent implements OnInit, OnDestroy {
           search: data === 'time' || data === null ?
             '' : this.filterForm.value.search?.toString(), criterion: data
         });
-        data === 'time' || data === null && this.filterForm.controls['search'].setValue('');
+        (data === null || data === 'time') && this.filterForm.controls['search'].setValue('');
         
       });
   }
