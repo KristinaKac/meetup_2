@@ -50,7 +50,7 @@ export class MeetupComponent implements OnInit {
   }
 
   get isSubscribe(): { id: number, email: string, password: string, fio: string } | undefined {
-    return this.meetup.users.find((item: IUser) => item.id === this.authService.user?.id);
+    return this.meetup.users.find((item: IUser): boolean => item.id === this.authService.user?.id);
   }
 
   subscribe(): void {

@@ -15,18 +15,18 @@ export class FilterMeetupsPipe implements PipeTransform {
 
     switch (criterion) {
       case 'owner':
-        meetupList = meetupList.filter((item: IMeetup) => item[criterion]?.fio.toLowerCase().includes(search.toLowerCase()));
+        meetupList = meetupList.filter((item: IMeetup): boolean => item[criterion]?.fio.toLowerCase().includes(search.toLowerCase()));
         break;
       case 'name':
       case 'description':
       case 'location':
-        meetupList = meetupList.filter((item: IMeetup) => {
+        meetupList = meetupList.filter((item: IMeetup): boolean | undefined => {
           if (!item[criterion]) { return }
           return item[criterion].toLowerCase().includes(search.toLowerCase())
         });
         break;
       case 'time':
-        meetupList = meetupList.filter((item: IMeetup) => {
+        meetupList = meetupList.filter((item: IMeetup): boolean => {
           const date = new Date(item.time);
           return moment(date).isSame(moment(search), 'D');
         })

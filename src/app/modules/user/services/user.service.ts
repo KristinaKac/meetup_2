@@ -34,7 +34,7 @@ export class UserService {
     return this.http
       .post<{ token: string }>(`${this.baseAuthURL}/registration`, { fio, email, password })
       .pipe(
-        map((response: { token: string }) =>
+        map((response: { token: string }): IUser =>
           this.authService.parseJWT(response.token)
         ),
         catchError((err: Error): Observable<null> => {

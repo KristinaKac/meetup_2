@@ -4,4 +4,4 @@ import { AppModule } from './app/app.module';
 
 
 platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch((err: Error) => alert(err));
+  .catch((err: Error): void => alert(err));

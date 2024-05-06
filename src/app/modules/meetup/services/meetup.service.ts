@@ -19,8 +19,8 @@ export class MeetupService {
     return this.http
       .get<IMeetup[]>(`${this.baseURL}`)
       .pipe(
-        map((data: IMeetup[]) => {
-          return data.sort((a: IMeetup, b: IMeetup) =>
+        map((data: IMeetup[]): IMeetup[] => {
+          return data.sort((a: IMeetup, b: IMeetup): number =>
             new Date(b.time) > new Date(a.time) ? 1 : -1
           )
         }),
@@ -73,7 +73,7 @@ export class MeetupService {
           reason_to_come: value.form.reason_to_come
         })
       .pipe(
-        map((item: IMeetup) => {
+        map((item: IMeetup): IMeetup => {
           item.users = [];
           return item
         }),
@@ -100,7 +100,7 @@ export class MeetupService {
           reason_to_come: form.reason_to_come,
         })
       .pipe(
-        map((item: IMeetup) => {
+        map((item: IMeetup): IMeetup => {
           meetup ? item.owner = meetup.owner : item.owner;
           return item
         }),

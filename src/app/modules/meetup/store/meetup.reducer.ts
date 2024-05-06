@@ -18,7 +18,7 @@ export const meetupReducer = createReducer(initialState,
         meetupList: IMeetup[] | null;
     } & TypedAction<MeetupActionTypes.requestAllMeetupsApi> & {
         type: MeetupActionTypes.requestAllMeetupsApi;
-    }) => {
+    }): MeetupState => {
         return {
             ...state,
             meetupList: action.meetupList
@@ -28,7 +28,7 @@ export const meetupReducer = createReducer(initialState,
         page: number;
     } & TypedAction<MeetupActionTypes.setCurrentPageMeetup> & {
         type: MeetupActionTypes.setCurrentPageMeetup;
-    }) => {
+    }): MeetupState => {
         return {
             ...state,
             currentPage: action.page
@@ -38,11 +38,11 @@ export const meetupReducer = createReducer(initialState,
         meetup: IMeetup | null;
     } & TypedAction<MeetupActionTypes.subscribeMeetupApi> & {
         type: MeetupActionTypes.subscribeMeetupApi;
-    }) => {
+    }): MeetupState => {
 
         return {
             ...state,
-            meetupList: state.meetupList!.map((meetup: IMeetup) =>
+            meetupList: state.meetupList!.map((meetup: IMeetup): IMeetup =>
                 meetup.id === action.meetup!.id ? action.meetup! : meetup)
         }
     }),
@@ -50,7 +50,7 @@ export const meetupReducer = createReducer(initialState,
         meetup: IMeetup | null;
     } & TypedAction<MeetupActionTypes.createMeetupApi> & {
         type: MeetupActionTypes.createMeetupApi;
-    }) => {
+    }): MeetupState => {
         return {
             ...state,
             meetupList: [...state.meetupList!, action.meetup!]
@@ -60,10 +60,10 @@ export const meetupReducer = createReducer(initialState,
         meetup: IMeetup | null;
     } & TypedAction<MeetupActionTypes.editMeetupApi> & {
         type: MeetupActionTypes.editMeetupApi;
-    }) => {
+    }): MeetupState => {
         return {
             ...state,
-            meetupList: state.meetupList!.map((meetup: IMeetup) =>
+            meetupList: state.meetupList!.map((meetup: IMeetup): IMeetup =>
                 meetup.id === action.meetup!.id ? action.meetup! : meetup)
         }
     }),
@@ -71,10 +71,10 @@ export const meetupReducer = createReducer(initialState,
         meetup: IMeetup | null;
     } & TypedAction<MeetupActionTypes.deleteMeetupApi> & {
         type: MeetupActionTypes.deleteMeetupApi;
-    }) => {
+    }): MeetupState => {
         return {
             ...state,
-            meetupList: state.meetupList!.filter((meetup: IMeetup) => meetup.id !== action.meetup!.id)
+            meetupList: state.meetupList!.filter((meetup: IMeetup): boolean => meetup.id !== action.meetup!.id)
         }
     })
 )

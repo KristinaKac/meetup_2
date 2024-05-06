@@ -31,7 +31,7 @@ export class MeetupsPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.store.dispatch(getAllMeetups());
     this.meetupList$ = this.store.select(getMeetups);
-    this.store.select(getCurrentPage).pipe(takeUntil(this.destroy)).subscribe((page: number) => this.currentPage$ = page);
+    this.store.select(getCurrentPage).pipe(takeUntil(this.destroy)).subscribe((page: number): number => this.currentPage$ = page);
   }
   subscribe(value: { idMeetup: number, idUser: number }): void {
     this.store.dispatch(subscribeMeetup({idMeetup: value.idMeetup, idUser: value.idUser}))

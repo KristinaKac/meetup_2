@@ -29,7 +29,7 @@ export class AuthService {
   }
   public checkAdmin(): void {
     if (this.user?.roles) {
-      this.isAdmin = this.user.roles.some((role: IRoles) => role.name === 'ADMIN');
+      this.isAdmin = this.user.roles.some((role: IRoles): boolean => role.name === 'ADMIN');
     } else {
       this.isAdmin = false;
     }
@@ -39,10 +39,10 @@ export class AuthService {
     return this.http
       .post<{ token: string }>(`${this.baseURL}/login`, { email, password })
       .pipe(
-        tap((response: { token: string }) =>
+        tap((response: { token: string }): void =>
           localStorage.setItem('token', response.token)
         ),
-        map((response: { token: string }) =>
+        map((response: { token: string }): IUser =>
           this.parseJWT(response.token)
         ),
         catchError((err: Error): Observable<null> => {
@@ -57,10 +57,10 @@ export class AuthService {
     return this.http
       .post<{ token: string }>(`${this.baseURL}/registration`, { fio, email, password })
       .pipe(
-        tap((response: { token: string }) =>
+        tap((response: { token: string }): void =>
           localStorage.setItem('token', response.token)
         ),
-        map((response: { token: string }) =>
+        map((response: { token: string }): IUser =>
           this.parseJWT(response.token)
         ),
         catchError((err: Error): Observable<null> => {
@@ -84,7 +84,7 @@ export class AuthService {
       window
         .atob(base64)
         .split('')
-        .map(function (c) {
+        .map(function (c): string {
           return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
         })
         .join('')

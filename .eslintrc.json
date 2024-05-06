@@ -1,7 +1,8 @@
 {
   "root": true,
   "ignorePatterns": [
-    "projects/**/*"
+    "projects/**/*",
+      "*.spec.ts"
   ],
   "overrides": [
     {
@@ -37,7 +38,7 @@
         "@typescript-eslint/explicit-function-return-type": [
           "error",
           {
-            "allowExpressions": true
+            "allowTypedFunctionExpressions": false
           }
         ],
         "@typescript-eslint/no-inferrable-types": [

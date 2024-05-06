@@ -18,7 +18,7 @@ export class spinnerInterceptor implements HttpInterceptor {
     this.totalRequests++;
 
     return next.handle(request).pipe(
-      finalize(() => {
+      finalize((): void => {
         this.completedRequests++;
 
         if (this.completedRequests === this.totalRequests) {

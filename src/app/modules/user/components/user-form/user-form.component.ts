@@ -31,8 +31,8 @@ export class UserFormComponent implements OnInit, OnDestroy {
         .pipe(
           takeUntil(this.destroy)
         )
-        .subscribe((roles: IRole[] | null) => {
-          this.items = roles!.map((role: IRole) => role.name)
+        .subscribe((roles: IRole[] | null): void => {
+          this.items = roles!.map((role: IRole): string => role.name)
         })
     }
 
@@ -45,7 +45,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
   }
 
   check(roleName: string): boolean | undefined {
-    return this.user.roles?.some((role: IRoles) => role.name === roleName);
+    return this.user.roles?.some((role: IRoles): boolean => role.name === roleName);
   }
   closeForm(): void {
     this.closeFormEvent.emit(false)

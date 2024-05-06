@@ -21,14 +21,14 @@ export class LoginPageComponent implements OnDestroy {
   ) { }
 
   login(value: { email: string, password: string }): void {
-    this.authService.login(value.email, value.password).pipe(takeUntil(this.destroy)).subscribe((user: IUser | null) => {
+    this.authService.login(value.email, value.password).pipe(takeUntil(this.destroy)).subscribe((user: IUser | null): void => {
       if (!user) { return }
       this.router.navigate(['meetups']);
       this.authService.checkAdmin();
     })
   }
   registration(value: { fio: string, email: string, password: string }): void {
-    this.authService.registration(value.fio, value.email, value.password).pipe(takeUntil(this.destroy)).subscribe((user: IUser | null) => {
+    this.authService.registration(value.fio, value.email, value.password).pipe(takeUntil(this.destroy)).subscribe((user: IUser | null): void => {
       if (!user) { return }
       this.router.navigate(['meetups']);
       this.authService.checkAdmin();

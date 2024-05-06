@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { PrizmSelectStringify, PrizmSelectValueTransformver } from '@prizm-ui/components';
 import 'moment/locale/ru';
 import { Subject, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs';
@@ -34,10 +34,10 @@ export class FilterFormComponent implements OnInit, OnDestroy {
       criterion: new FormControl<'name' | 'description' | 'location' | 'time' | 'owner'>('name')
     });
   }
-  readonly stringify: PrizmSelectStringify<{ key: string, title: string }> = (item: { key: string, title: string }) => {
+  readonly stringify: PrizmSelectStringify<{ key: string, title: string }> = (item: { key: string, title: string }): string => {
     return item ? item.title : '';
   };
-  readonly transformer: PrizmSelectValueTransformver<{ key: string, title: string }> = (item: { key: string, title: string }) => {
+  readonly transformer: PrizmSelectValueTransformver<{ key: string, title: string }> = (item: { key: string, title: string }): string => {
     return item ? item.key : '';
   };
 
@@ -47,7 +47,7 @@ export class FilterFormComponent implements OnInit, OnDestroy {
         debounceTime(500),
         distinctUntilChanged(),
         takeUntil(this.destroy))
-      .subscribe((data: string) => {
+      .subscribe((data: string): void => {
         if (this.filterForm.invalid) { return }
         this.filterEvent.emit({ search: data, criterion: this.filterForm.value.criterion });
       });
@@ -56,7 +56,7 @@ export class FilterFormComponent implements OnInit, OnDestroy {
         debounceTime(500),
         distinctUntilChanged(),
         takeUntil(this.destroy))
-      .subscribe((data: "name" | "description" | "location" | "time" | "owner") => {
+      .subscribe((data: "name" | "description" | "location" | "time" | "owner"): void => {
         if (this.filterForm.invalid) { return }
         this.filterEvent.emit({
           search: data === 'time' || data === null ?
